@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace VippsCaseAPI.Models
 {
+    [Table("User")]
     public class User
     {
         [Key]
@@ -16,8 +18,5 @@ namespace VippsCaseAPI.Models
         public string Email { get; set; }
         public string PhoneNr { get; set; }
         public bool Active { get; set; }
-
-        public ICollection<PaymentInfo> PaymentInfos { get; set; }
-        public ICollection<Order> Orders { get; set; }
     }
 }

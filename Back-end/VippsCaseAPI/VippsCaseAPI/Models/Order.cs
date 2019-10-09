@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace VippsCaseAPI.Models
 {
+    [Table("Order")]
     public class Order
     {
         [Key]

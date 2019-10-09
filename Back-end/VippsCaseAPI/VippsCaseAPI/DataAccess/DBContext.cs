@@ -18,6 +18,10 @@ namespace VippsCaseAPI.DataAccess
         public DbSet<User> users { get; set; }
         public DbSet<Password> passwords { get; set; }
         public DbSet<PaymentInfo> paymentInfos { get; set; }
+        public DbSet<Order> orders { get; set; }
+        public DbSet<OrderItem> orderItems { get; set; }
+        public DbSet<Item> items { get; set; }
+
 
     }
 }

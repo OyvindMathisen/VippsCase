@@ -1,0 +1,14 @@
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\VippsCaseAPI.deps.json
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\VippsCaseAPI.runtimeconfig.json
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\VippsCaseAPI.runtimeconfig.dev.json
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\VippsCaseAPI.dll
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\VippsCaseAPI.pdb
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.csprojAssemblyReference.cache
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.csproj.CoreCompileInputs.cache
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.RazorAssemblyInfo.cache
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.RazorAssemblyInfo.cs
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.AssemblyInfoInputs.cache
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.AssemblyInfo.cs
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.RazorTargetAssemblyInfo.cache
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.dll
+C:\Experis\Git\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.pdb
