@@ -12,23 +12,23 @@ namespace VippsCaseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentInfoesController : ControllerBase
+    public class PaymentInfosController : ControllerBase
     {
         private readonly DBContext _context;
 
-        public PaymentInfoesController(DBContext context)
+        public PaymentInfosController(DBContext context)
         {
             _context = context;
         }
 
-        // GET: api/PaymentInfoes
+        // GET: api/PaymentInfos
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PaymentInfo>>> GetpaymentInfos()
         {
             return await _context.paymentInfos.ToListAsync();
         }
 
-        // GET: api/PaymentInfoes/5
+        // GET: api/PaymentInfos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PaymentInfo>> GetPaymentInfo(int id)
         {
@@ -42,7 +42,7 @@ namespace VippsCaseAPI.Controllers
             return paymentInfo;
         }
 
-        // PUT: api/PaymentInfoes/5
+        // PUT: api/PaymentInfos/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPaymentInfo(int id, PaymentInfo paymentInfo)
         {
@@ -72,7 +72,7 @@ namespace VippsCaseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/PaymentInfoes
+        // POST: api/PaymentInfos
         [HttpPost]
         public async Task<ActionResult<PaymentInfo>> PostPaymentInfo(PaymentInfo paymentInfo)
         {
@@ -82,7 +82,7 @@ namespace VippsCaseAPI.Controllers
             return CreatedAtAction("GetPaymentInfo", new { id = paymentInfo.PaymentInfoId }, paymentInfo);
         }
 
-        // DELETE: api/PaymentInfoes/5
+        // DELETE: api/PaymentInfos/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<PaymentInfo>> DeletePaymentInfo(int id)
         {
