@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VippsCaseAPI", "VippsCaseAPI\VippsCaseAPI.csproj", "{52CC4ECA-EF3E-4708-B4BD-203BBA4EA855}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52CC4ECA-EF3E-4708-B4BD-203BBA4EA855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52CC4ECA-EF3E-4708-B4BD-203BBA4EA855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52CC4ECA-EF3E-4708-B4BD-203BBA4EA855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52CC4ECA-EF3E-4708-B4BD-203BBA4EA855}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DABCD5C5-0A2B-4801-8584-B5350D416846}
+	EndGlobalSection
+EndGlobal
