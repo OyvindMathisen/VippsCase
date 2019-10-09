@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Back-end",
+    "\\Back-end\\VippsCaseAPI",
+    "\\Back-end\\VippsCaseAPI\\VippsCaseAPI",
+    "\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\bin",
+    "\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\Controllers",
+    "\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\Models",
+    "\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\obj",
+    "\\Front-end"
+  ],
+  "SelectedNode": "\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\Controllers\\ValuesController.cs",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Experis\\Git\\VippsCase\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\VippsCaseAPI.csproj": {}
+    "C:\\Users\\sfurul\\source\\repos\\OyvindMathisen\\VippsCase\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\VippsCaseAPI.csproj": {}
   },
   "projects": {
-    "C:\\Experis\\Git\\VippsCase\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\VippsCaseAPI.csproj": {
+    "C:\\Users\\sfurul\\source\\repos\\OyvindMathisen\\VippsCase\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\VippsCaseAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Experis\\Git\\VippsCase\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\VippsCaseAPI.csproj",
+        "projectUniqueName": "C:\\Users\\sfurul\\source\\repos\\OyvindMathisen\\VippsCase\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\VippsCaseAPI.csproj",
         "projectName": "VippsCaseAPI",
-        "projectPath": "C:\\Experis\\Git\\VippsCase\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\VippsCaseAPI.csproj",
-        "packagesPath": "C:\\Users\\fnsven\\.nuget\\packages\\",
-        "outputPath": "C:\\Experis\\Git\\VippsCase\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\obj\\",
+        "projectPath": "C:\\Users\\sfurul\\source\\repos\\OyvindMathisen\\VippsCase\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\VippsCaseAPI.csproj",
+        "packagesPath": "C:\\Users\\sfurul\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sfurul\\source\\repos\\OyvindMathisen\\VippsCase\\Back-end\\VippsCaseAPI\\VippsCaseAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\fnsven\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\sfurul\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -57,6 +57,10 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.2.3, )"
             }
           },
           "imports": [
