@@ -72,31 +72,37 @@ namespace VippsCaseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        // UpdateActieStatus: api/Users/toggleActive
+        [HttpPut("toggleActive/{id}")]
+        public async Task <IActionResult> UpdateActiveStatus(int id)
         {
-            _context.users.Add(user);
-            await _context.SaveChangesAsync();
+            User user = new User();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
-        }
+            user = await _context.users.FirstOrDefaultAsync(x => x.UserId == id);
 
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(int id)
-        {
-            var user = await _context.users.FindAsync(id);
-            if (user == null)
+            user.Active = !user.Active;
+
+            _context.Entry(user).State = EntityState.Modified;
+
+            try
             {
-                return NotFound();
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
-            _context.users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return user;
+            return NoContent();
         }
+
 
         private bool UserExists(int id)
         {
