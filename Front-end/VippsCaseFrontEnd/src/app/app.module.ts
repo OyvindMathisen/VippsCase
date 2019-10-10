@@ -10,11 +10,13 @@ import { PurchaseConfirmedComponent } from './views/purchase-confirmed/purchase-
 import { ItemListComponent } from './components/item-list/item-list.component';
 import { ItemComponent } from './components/item/item.component';
 import { BillComponent } from './components/bill/bill.component';
+import { LoginModuleComponent } from './components/login-module/login-module.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginFormComponent,
+    LoginModuleComponent,
     PurchasePageComponent,
     PurchaseHistoryComponent,
     PurchaseConfirmedComponent,
