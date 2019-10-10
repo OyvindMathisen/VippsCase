@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using VippsCaseAPI.DataAccess;
 using VippsCaseAPI.Models;
@@ -55,6 +56,31 @@ namespace VippsCaseAPI.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(p);
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login([FromBody]JObject data)
+        {
+            //TODO: Exception handling
+            //TODO: Input validation
+
+            string email = data["email"].ToString();
+            string password = data["password"].ToString();
+
+            User u = await _context.users.FirstOrDefaultAsync(x => x.Email == email);
+
+            Password p = await _context.passwords.FirstOrDefaultAsync(x => x.UserId == u.UserId);
+
+            string hashedPassword = ComputeSha512Hash(password + p.Salt);
+
+            if (hashedPassword == p.PasswordHash)
+            {
+                return Ok("User Validated!");
+            }
+            else
+            {
+                return StatusCode(501);
+            }
         }
 
         //TODO: Seperation of concern
