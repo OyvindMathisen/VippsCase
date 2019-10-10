@@ -79,7 +79,7 @@ namespace VippsCaseAPI.Controllers
             }
             else
             {
-                return StatusCode(501);
+                return Unauthorized("User Validation Failed!");
             }
         }
 
