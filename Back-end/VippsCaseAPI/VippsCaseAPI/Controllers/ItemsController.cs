@@ -82,20 +82,35 @@ namespace VippsCaseAPI.Controllers
             return CreatedAtAction("GetItem", new { id = item.ItemId }, item);
         }
 
-        // DELETE: api/Items/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Item>> DeleteItem(int id)
+        // PUT: api/Items/5
+        [HttpPut("toggleActive/{id}")]
+        public async Task<IActionResult> UpdateActiveStatus(int id)
         {
-            var item = await _context.items.FindAsync(id);
-            if (item == null)
+            Item item = new Item();
+
+            item = await _context.items.FirstOrDefaultAsync(x => x.ItemId == id);
+
+            item.Active = !item.Active;
+
+            _context.Entry(item).State = EntityState.Modified;
+
+            try
             {
-                return NotFound();
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ItemExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
-            _context.items.Remove(item);
-            await _context.SaveChangesAsync();
-
-            return item;
+            return NoContent();
         }
 
         private bool ItemExists(int id)
