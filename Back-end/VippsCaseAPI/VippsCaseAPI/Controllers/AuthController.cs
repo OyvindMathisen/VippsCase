@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,16 +28,62 @@ namespace VippsCaseAPI.Controllers
         {
             //TODO: Validate input
 
-            /*_context.users.Add(user);
-            await _context.SaveChangesAsync();*/
-
             //TODO: Exception Handling
+
+            //User generation
 
             User user = data["userData"].ToObject<User>();
 
+            _context.users.Add(user);
+
+            //Paaword generation
+
             string password = data["password"].ToString();
 
-            return Ok(user);
+            Password p = new Password();
+
+            p.Salt = generateSalt();
+
+            p.PasswordHash = ComputeSha512Hash(password + p.Salt);
+
+            p.UserId = user.UserId;
+
+            p.Active = true;
+
+            _context.passwords.Add(p);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(p);
+        }
+
+        //TODO: Seperation of concern
+        //src: https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings
+        public string generateSalt()
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, 9)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        //src: https://www.c-sharpcorner.com/article/compute-sha256-hash-in-c-sharp/
+        static string ComputeSha512Hash(string rawData)
+        {
+            // Create a SHA256   
+            using (SHA512 sha256Hash = SHA512.Create())
+            {
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
     }
 }
