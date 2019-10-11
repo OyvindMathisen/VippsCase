@@ -12,9 +12,13 @@ namespace VippsCaseAPI.Models
     {
         [Key]
         public int ItemId { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string ImageUrl { get; set; }
+        [Required]
         public int Price { get; set; }
+        [Required]
         public bool Active { get; set; }
     }
 }

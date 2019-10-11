@@ -12,11 +12,15 @@ namespace VippsCaseAPI.Models
     {
         [Key]
         public int PasswordId { get; set; }
+        [Required]
         public string PasswordHash { get; set; }
+        [Required]
         public string Salt { get; set; }
+        [Required]
         public bool Active { get; set; }
 
         [ForeignKey("FK_Password_UserId")]
+        [Required]
         public int UserId { get; set; }
         public User User { get; set; }
     }

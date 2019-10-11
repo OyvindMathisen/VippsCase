@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using VippsCaseAPI.DataAccess;
 using VippsCaseAPI.Models;
 
@@ -73,29 +74,50 @@ namespace VippsCaseAPI.Controllers
         }
 
         // POST: api/Orders
-        [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        /*[HttpPost]
+        public async Task<ActionResult<Order>> PostOrder([FromBody]JObject data)
         {
+            int userId = data["userId"].ToObject<int>();
+
+            OrderItemDTO[] items = data["items"].ToObject<OrderItemDTO[]>();
+
+            return Ok(items);
+
             _context.orders.Add(order);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
-        }
+        }*/
 
-        // DELETE: api/Orders/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Order>> DeleteOrder(int id)
+        [HttpPut("toggleActive/{id}")]
+        public async Task<IActionResult> UpdateActiveStatus(int id)
         {
-            var order = await _context.orders.FindAsync(id);
-            if (order == null)
+            Order order = new Order();
+
+            order = await _context.orders.FirstOrDefaultAsync(x => x.OrderId == id);
+
+            order.Active = !order.Active;
+
+            _context.Entry(order).State = EntityState.Modified;
+
+            try
             {
-                return NotFound();
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
-            _context.orders.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return order;
+            return NoContent();
         }
 
         private bool OrderExists(int id)

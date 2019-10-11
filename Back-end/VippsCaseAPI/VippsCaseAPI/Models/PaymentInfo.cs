@@ -12,13 +12,11 @@ namespace VippsCaseAPI.Models
     {
         [Key]
         public int PaymentInfoId { get; set; }
-        public int EardNr { get; set; }
-        public DateTime ExpirationDate { get; set; }
-        public int Cvv { get; set; }
-        public string CardType { get; set; }
-        public bool Active { get; set; }
+        [Required]
+        public string PaymentToken { get; set; }
 
         [ForeignKey("FK_PaymentInfo_UserId")]
+        [Required]
         public int UserId { get; set; }
         public User User { get; set; }
     }

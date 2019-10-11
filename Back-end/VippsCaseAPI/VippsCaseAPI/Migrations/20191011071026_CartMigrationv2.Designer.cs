@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VippsCaseAPI.DataAccess;
 
 namespace VippsCaseAPI.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20191011071026_CartMigrationv2")]
+    partial class CartMigrationv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,19 +44,13 @@ namespace VippsCaseAPI.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<int?>("CartId");
+                    b.Property<string>("ImageUrl");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired();
-
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.Property<int>("Price");
 
                     b.HasKey("ItemId");
-
-                    b.HasIndex("CartId");
 
                     b.ToTable("Item");
                 });
@@ -111,11 +107,9 @@ namespace VippsCaseAPI.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired();
+                    b.Property<string>("PasswordHash");
 
-                    b.Property<string>("Salt")
-                        .IsRequired();
+                    b.Property<string>("Salt");
 
                     b.Property<int>("UserId");
 
@@ -132,8 +126,15 @@ namespace VippsCaseAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("PaymentToken")
-                        .IsRequired();
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("CardType");
+
+                    b.Property<int>("Cvv");
+
+                    b.Property<int>("EardNr");
+
+                    b.Property<DateTime>("ExpirationDate");
 
                     b.Property<int>("UserId");
 
@@ -152,30 +153,19 @@ namespace VippsCaseAPI.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<string>("Address")
-                        .IsRequired();
+                    b.Property<string>("Address");
 
-                    b.Property<string>("Email")
-                        .IsRequired();
+                    b.Property<string>("Email");
 
-                    b.Property<string>("Firstname")
-                        .IsRequired();
+                    b.Property<string>("Firstname");
 
-                    b.Property<string>("Lastname")
-                        .IsRequired();
+                    b.Property<string>("Lastname");
 
                     b.Property<string>("PhoneNr");
 
                     b.HasKey("UserId");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("VippsCaseAPI.Models.Item", b =>
-                {
-                    b.HasOne("VippsCaseAPI.Models.Cart")
-                        .WithMany("items")
-                        .HasForeignKey("CartId");
                 });
 
             modelBuilder.Entity("VippsCaseAPI.Models.Order", b =>

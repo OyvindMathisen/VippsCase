@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VippsCaseAPI.DataAccess;
 
 namespace VippsCaseAPI.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20191011071653_NotNullMigrationv1")]
+    partial class NotNullMigrationv1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,8 +44,6 @@ namespace VippsCaseAPI.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<int?>("CartId");
-
                     b.Property<string>("ImageUrl")
                         .IsRequired();
 
@@ -53,8 +53,6 @@ namespace VippsCaseAPI.Migrations
                     b.Property<int>("Price");
 
                     b.HasKey("ItemId");
-
-                    b.HasIndex("CartId");
 
                     b.ToTable("Item");
                 });
@@ -169,13 +167,6 @@ namespace VippsCaseAPI.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("VippsCaseAPI.Models.Item", b =>
-                {
-                    b.HasOne("VippsCaseAPI.Models.Cart")
-                        .WithMany("items")
-                        .HasForeignKey("CartId");
                 });
 
             modelBuilder.Entity("VippsCaseAPI.Models.Order", b =>
