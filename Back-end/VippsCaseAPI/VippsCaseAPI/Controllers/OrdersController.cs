@@ -22,11 +22,11 @@ namespace VippsCaseAPI.Controllers
         }
 
         // GET: api/Orders
-        [HttpGet]
+        /*[HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> Getorders()
         {
             return await _context.orders.ToListAsync();
-        }
+        }*/
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
@@ -82,20 +82,34 @@ namespace VippsCaseAPI.Controllers
             return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
         }
 
-        // DELETE: api/Orders/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Order>> DeleteOrder(int id)
+        [HttpPut("toggleActive/{id}")]
+        public async Task<IActionResult> UpdateActiveStatus(int id)
         {
-            var order = await _context.orders.FindAsync(id);
-            if (order == null)
+            Order order = new Order();
+
+            order = await _context.orders.FirstOrDefaultAsync(x => x.OrderId == id);
+
+            order.Active = !order.Active;
+
+            _context.Entry(order).State = EntityState.Modified;
+
+            try
             {
-                return NotFound();
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
-            _context.orders.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return order;
+            return NoContent();
         }
 
         private bool OrderExists(int id)
