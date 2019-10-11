@@ -8,9 +8,9 @@ import { PurchaseConfirmedComponent } from './views/purchase-confirmed/purchase-
 
 const routes: Routes = [
   { path: "", component: LoginFormComponent },
-  { path: "/purchase", component: PurchasePageComponent },
-  { path: "/confirmation", component: PurchaseConfirmedComponent },
-  { path: "/profile", component: PurchaseHistoryComponent }
+  { path: "purchase", component: PurchasePageComponent },
+  { path: "confirmation", component: PurchaseConfirmedComponent },
+  { path: "profile", component: PurchaseHistoryComponent }
 ];
 
 @NgModule({
