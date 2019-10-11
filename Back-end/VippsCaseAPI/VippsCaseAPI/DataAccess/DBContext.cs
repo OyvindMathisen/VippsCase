@@ -21,7 +21,6 @@ namespace VippsCaseAPI.DataAccess
         public DbSet<Order> orders { get; set; }
         public DbSet<OrderItem> orderItems { get; set; }
         public DbSet<Item> items { get; set; }
-
-
+        public DbSet<Cart> carts { get; set; }
     }
 }
