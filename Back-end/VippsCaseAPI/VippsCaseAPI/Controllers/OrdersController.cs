@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using VippsCaseAPI.DataAccess;
 using VippsCaseAPI.Models;
 
@@ -22,11 +23,11 @@ namespace VippsCaseAPI.Controllers
         }
 
         // GET: api/Orders
-        /*[HttpGet]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> Getorders()
         {
             return await _context.orders.ToListAsync();
-        }*/
+        }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
@@ -73,14 +74,21 @@ namespace VippsCaseAPI.Controllers
         }
 
         // POST: api/Orders
-        [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        /*[HttpPost]
+        public async Task<ActionResult<Order>> PostOrder([FromBody]JObject data)
         {
+            int userId = data["userId"].ToObject<int>();
+
+            OrderItemDTO[] items = data["items"].ToObject<OrderItemDTO[]>();
+
+            return Ok(items);
+
             _context.orders.Add(order);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
-        }
+        }*/
 
         [HttpPut("toggleActive/{id}")]
         public async Task<IActionResult> UpdateActiveStatus(int id)
