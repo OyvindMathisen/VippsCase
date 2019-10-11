@@ -12,11 +12,16 @@ namespace VippsCaseAPI.Models
     {
         [Key]
         public int UserId { get; set; }
+        [Required]
         public string Firstname { get; set; }
+        [Required]
         public string Lastname { get; set; }
+        [Required]
         public string Address { get; set; }
+        [Required]
         public string Email { get; set; }
         public string PhoneNr { get; set; }
+        [Required]
         public bool Active { get; set; }
     }
 }

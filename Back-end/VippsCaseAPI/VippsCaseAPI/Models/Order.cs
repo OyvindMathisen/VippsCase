@@ -12,11 +12,15 @@ namespace VippsCaseAPI.Models
     {
         [Key]
         public int OrderId { get; set; }
+        [Required]
         public int Total { get; set; }
+        [Required]
         public DateTime CreatedAt { get; set; }
+        [Required]
         public bool Active { get; set; }
 
         [ForeignKey("FK_Order_UserId")]
+        [Required]
         public int UserId { get; set; }
         public User User { get; set; }
     }
