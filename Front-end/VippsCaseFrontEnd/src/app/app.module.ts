@@ -13,6 +13,7 @@ import { BillComponent } from './components/bill/bill.component';
 import { LoginModuleComponent } from './components/login-module/login-module.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FooterComponent } from './components/footer/footer.component';
     ItemComponent,
     BillComponent,
     NavBarComponent,
-    FooterComponent
+    FooterComponent,
+    ProfileDetailsComponent
   ],
   imports: [
     BrowserModule,
