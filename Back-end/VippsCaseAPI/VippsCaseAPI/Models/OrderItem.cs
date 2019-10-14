@@ -10,6 +10,13 @@ namespace VippsCaseAPI.Models
     [Table("OrderItem")]
     public class OrderItem
     {
+        public OrderItem(int OrderId, int ItemId)
+        {
+            this.OrderId = OrderId;
+            this.ItemId = ItemId;
+            Active = true;
+            Quantity = 1;
+        }
 
         [Key]
         public int OrderItemId { get; set; }

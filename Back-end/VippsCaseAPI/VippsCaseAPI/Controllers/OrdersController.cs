@@ -74,21 +74,35 @@ namespace VippsCaseAPI.Controllers
         }
 
         // POST: api/Orders
-        /*[HttpPost]
+        [HttpPost]
         public async Task<ActionResult<Order>> PostOrder([FromBody]JObject data)
         {
+            //Get data from post body
             int userId = data["userId"].ToObject<int>();
+            int cartId = data["cartId"].ToObject<int>();
 
-            OrderItemDTO[] items = data["items"].ToObject<OrderItemDTO[]>();
+            //Retrieve connected cart
+            Cart cart = await _context.carts.FirstOrDefaultAsync(x => x.CartId == cartId);
 
-            return Ok(items);
+            //Set order values
+            Order order = new Order();
 
-            _context.orders.Add(order);
+            //Create orderitem values and calculate total cart price
+            /*foreach(Item item in cart.items)
+            {
+                OrderItem tempOrderItem = new OrderItem(order.OrderId);
+
+            }*/
+
+            //Save order
+            /*_context.orders.Add(order);
 
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
-        }*/
+            return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);*/
+
+            return Ok(order);
+        }
 
         [HttpPut("toggleActive/{id}")]
         public async Task<IActionResult> UpdateActiveStatus(int id)

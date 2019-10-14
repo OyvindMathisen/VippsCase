@@ -10,6 +10,13 @@ namespace VippsCaseAPI.Models
     [Table("Order")]
     public class Order
     {
+        public Order()
+        {
+            Active = true;
+            CreatedAt = DateTime.Now;
+            Total = 0;
+        }
+
         [Key]
         public int OrderId { get; set; }
         [Required]

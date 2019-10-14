@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using VippsCaseAPI.DataAccess;
 using VippsCaseAPI.Models;
 
@@ -25,6 +26,7 @@ namespace VippsCaseAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cart>>> Getcarts()
         {
+            //_context.
             return await _context.carts.ToListAsync();
         }
 
@@ -42,8 +44,8 @@ namespace VippsCaseAPI.Controllers
             return cart;
         }
 
-        [HttpGet("newCart")]
-        public async Task<ActionResult> GetNewCart()
+        [HttpPost("newCart")]
+        public async Task<ActionResult> PostNewCart([FromBody]JObject data)
         {
             //TODO: Seperation of concern
             //TODO: Exception handling
@@ -61,6 +63,14 @@ namespace VippsCaseAPI.Controllers
                 int index = rdm.Next(items.Count());
                 cart.items.Add(items[index]);
             }
+
+            cart.Status = Statuses.InProgress;
+
+            cart.UserId = data["userId"].ToObject<int>();
+
+            _context.carts.Add(cart);
+
+            await _context.SaveChangesAsync();
 
             return Ok(cart);
         }
