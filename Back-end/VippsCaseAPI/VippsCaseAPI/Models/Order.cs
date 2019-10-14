@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace VippsCaseAPI.Models
 {
+    public enum Statuses{
+        InProgress,
+        Accepted,
+        Declined
+    }
+
     [Table("Order")]
     public class Order
     {
@@ -25,6 +31,8 @@ namespace VippsCaseAPI.Models
         public DateTime CreatedAt { get; set; }
         [Required]
         public bool Active { get; set; }
+        [Required]
+        public Statuses Status { get; set; }
 
         [ForeignKey("FK_Order_UserId")]
         [Required]

@@ -82,7 +82,7 @@ namespace VippsCaseAPI.Controllers
             int cartId = data["cartId"].ToObject<int>();
 
             //Retrieve connected cart
-            Cart cart = await _context.carts.FirstOrDefaultAsync(x => x.CartId == cartId);
+            //Cart cart = await _context.carts.FirstOrDefaultAsync(x => x.CartId == cartId);
 
             //Set order values
             Order order = new Order();
