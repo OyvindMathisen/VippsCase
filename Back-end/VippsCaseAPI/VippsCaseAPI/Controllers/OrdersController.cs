@@ -26,7 +26,7 @@ namespace VippsCaseAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> Getorders()
         {
-            return await _context.orders.ToListAsync();
+            return await _context.orders.Where(x => x.Active == true).ToListAsync();
         }
 
         // GET: api/Orders/5
