@@ -15,6 +15,11 @@ input[type=text], input[type=password] {
 
       #loginForm {
         margin: 30px;
+
+        #anonymous {
+          position: relative;
+          float: right;
+        }
     }
   }
 
