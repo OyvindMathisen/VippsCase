@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stripe API Test</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ############# -->
+    <!-- Adding a card -->
+    <!-- ############# -->
+    <form id="payment-form">
+        <div class="form-row">
+            <label for="card-element">
+                Credit or debit card
+            </label>
+            <div id="card-element">
+                <!-- A Stripe Element will be inserted here.-->
+            </div>
+            <div id="card-errors" role="alert">
+                <!-- Used to display form errors-->
+            </div>
+        </div>
+        <button>Submit Payment</button>
+    </form>
+
+    <br>
+
+    <!-- ################# -->
+    <!-- Adding a customer -->
+    <!-- ################# -->
+    <form id="customer-form">
+        <div class="form-row">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Full Name"><br>
+            <label for="address-1">Address Line 1</label>
+            <input type="text" id="address-1" name="address-1" placeholder="Address - Line 1"><br>
+            <label for="address-2">Address Line 2</label>
+            <input type="text" id="address-2" name="address-2" placeholder="Address - Line 2"><br>
+            <label for="postal-code">Postal Code</label>
+            <input type="number" id="postal-code" name="postal-code" placeholder="1234"><br>
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" placeholder="City"><br>
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" placeholder="Country"><br>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="email@domain.com"><br>
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" placeholder="12345678"><br>
+        </div>
+        <button>Add Customer</button>
+    </form>
+
+    <script src="app.js"></script>
+</body>
+</html>
