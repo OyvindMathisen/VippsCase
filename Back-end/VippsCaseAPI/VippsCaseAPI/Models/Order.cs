@@ -21,6 +21,7 @@ namespace VippsCaseAPI.Models
             Active = true;
             CreatedAt = DateTime.Now;
             Total = 0;
+            Status = Statuses.InProgress;
         }
 
         [Key]

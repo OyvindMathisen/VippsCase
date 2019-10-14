@@ -73,6 +73,41 @@ namespace VippsCaseAPI.Controllers
             return NoContent();
         }
 
+        [HttpPost("newCart")]
+        public async Task<ActionResult> PostNewCart([FromBody]JObject data)
+        {
+            //TODO: Seperation of concern
+            //TODO: Exception handling
+            Order o = new Order();
+            o.UserId = data["userId"].ToObject<int>();
+
+            _context.orders.Add(o);
+            await _context.SaveChangesAsync();
+
+            //TODO: Use last here? possible problem with multiple requests at once
+            Order o2 = await _context.orders.LastAsync();
+
+            Random rand = new Random();
+
+            int itemAmount = rand.Next(5);
+
+            List<Item> items = await _context.items.ToListAsync();
+            List<Item> cart = new List<Item>();
+
+            for (int i = 0; i < itemAmount; i++)
+            {
+                Random rdm = new Random();
+                int index = rdm.Next(items.Count());
+                cart.Add(items[index]);
+                OrderItem tempOrderItem = new OrderItem(o2.OrderId, items[index].ItemId);
+                _context.orderItems.Add(tempOrderItem);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok(cart);
+        }
+
         // POST: api/Orders
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder([FromBody]JObject data)
