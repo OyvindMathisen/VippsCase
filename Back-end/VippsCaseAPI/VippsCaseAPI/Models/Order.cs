@@ -10,7 +10,8 @@ namespace VippsCaseAPI.Models
     public enum Statuses{
         InProgress,
         Accepted,
-        Declined
+        Declined,
+        Cart
     }
 
     [Table("Order")]
@@ -21,7 +22,7 @@ namespace VippsCaseAPI.Models
             Active = true;
             CreatedAt = DateTime.Now;
             Total = 0;
-            Status = Statuses.InProgress;
+            Status = Statuses.Cart;
         }
 
         [Key]

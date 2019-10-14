@@ -115,29 +115,16 @@ namespace VippsCaseAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder([FromBody]JObject data)
         {
+            //TODO: Validation of data
             //Get data from post body
-            int userId = data["userId"].ToObject<int>();
-            int cartId = data["orderId"].ToObject<int>();
+            int orderId = data["orderId"].ToObject<int>();
 
             //Retrieve connected cart
-            //Cart cart = await _context.carts.FirstOrDefaultAsync(x => x.CartId == cartId);
 
-            //Set order values
-            Order order = new Order();
+            Order order = await _context.orders.SingleOrDefaultAsync(x => x.OrderId == orderId);
 
-            //Create orderitem values and calculate total cart price
-            /*foreach(Item item in cart.items)
-            {
-                OrderItem tempOrderItem = new OrderItem(order.OrderId);
-
-            }*/
-
-            //Save order
-            /*_context.orders.Add(order);
-
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);*/
+            //Set Cart to an in progress order
+            order.Status = Statuses.InProgress;
 
             return Ok(order);
         }
@@ -150,6 +137,13 @@ namespace VippsCaseAPI.Controllers
             order = await _context.orders.FirstOrDefaultAsync(x => x.OrderId == id);
 
             order.Active = !order.Active;
+
+            List<OrderItem> orderItemList = await _context.orderItems.Where(x => x.OrderId == id).ToListAsync();
+
+            foreach(OrderItem oi in orderItemList)
+            {
+                oi.Active = !order.Active;
+            }
 
             _context.Entry(order).State = EntityState.Modified;
 
