@@ -14,7 +14,6 @@ import { LoginModuleComponent } from './components/login-module/login-module.com
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
-import { OrderListComponent } from './components/order-list/order-list.component';
 
 @NgModule({
   declarations: [
@@ -29,8 +28,7 @@ import { OrderListComponent } from './components/order-list/order-list.component
     BillComponent,
     NavBarComponent,
     FooterComponent,
-    ProfileDetailsComponent,
-    OrderListComponent
+    ProfileDetailsComponent
   ],
   imports: [
     BrowserModule,

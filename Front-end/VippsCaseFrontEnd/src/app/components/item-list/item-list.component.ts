@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-item-list',
@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemListComponent implements OnInit {
 
-  constructor() { }
+  //@Input() anyClassNameYouWant: string = 'any text or no text';
+  @Input() displayType: string = '';
+
+  items = [
+    {img: "url.jpg", name: "Macbook", price: 125},
+    {img: "url.jpg", name: "Alienware", price: 250}
+  ];
+  constructor(
+    // Init the service here
+  ) { }
 
   ngOnInit() {
+    // Get items here.
   }
 
 }
