@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using VippsCaseAPI.DataAccess;
+using VippsCaseAPI.DTOs;
 using VippsCaseAPI.Models;
 
 namespace VippsCaseAPI.Controllers
@@ -105,7 +106,9 @@ namespace VippsCaseAPI.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(cart);
+            CartDTO cartToReturn = new CartDTO(o2.OrderId, cart);
+
+            return Ok(cartToReturn);
         }
 
         // POST: api/Orders
@@ -114,7 +117,7 @@ namespace VippsCaseAPI.Controllers
         {
             //Get data from post body
             int userId = data["userId"].ToObject<int>();
-            int cartId = data["cartId"].ToObject<int>();
+            int cartId = data["orderId"].ToObject<int>();
 
             //Retrieve connected cart
             //Cart cart = await _context.carts.FirstOrDefaultAsync(x => x.CartId == cartId);
