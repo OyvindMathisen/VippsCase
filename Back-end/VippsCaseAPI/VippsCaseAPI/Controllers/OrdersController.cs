@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using VippsCaseAPI.DataAccess;
+using VippsCaseAPI.DTOs;
 using VippsCaseAPI.Models;
 
 namespace VippsCaseAPI.Controllers
@@ -26,7 +27,7 @@ namespace VippsCaseAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> Getorders()
         {
-            return await _context.orders.ToListAsync();
+            return await _context.orders.Where(x => x.Active == true).ToListAsync();
         }
 
         // GET: api/Orders/5
@@ -73,22 +74,60 @@ namespace VippsCaseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Orders
-        /*[HttpPost]
-        public async Task<ActionResult<Order>> PostOrder([FromBody]JObject data)
+        [HttpPost("newCart")]
+        public async Task<ActionResult> PostNewCart([FromBody]JObject data)
         {
-            int userId = data["userId"].ToObject<int>();
+            //TODO: Seperation of concern
+            //TODO: Exception handling
+            Order o = new Order();
+            o.UserId = data["userId"].ToObject<int>();
 
-            OrderItemDTO[] items = data["items"].ToObject<OrderItemDTO[]>();
+            _context.orders.Add(o);
+            await _context.SaveChangesAsync();
 
-            return Ok(items);
+            //TODO: Use last here? possible problem with multiple requests at once
+            Order o2 = await _context.orders.LastAsync();
 
-            _context.orders.Add(order);
+            Random rand = new Random();
+
+            int itemAmount = rand.Next(5);
+
+            List<Item> items = await _context.items.ToListAsync();
+            List<Item> cart = new List<Item>();
+
+            for (int i = 0; i < itemAmount; i++)
+            {
+                Random rdm = new Random();
+                int index = rdm.Next(items.Count());
+                cart.Add(items[index]);
+                OrderItem tempOrderItem = new OrderItem(o2.OrderId, items[index].ItemId);
+                _context.orderItems.Add(tempOrderItem);
+            }
 
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
-        }*/
+            CartDTO cartToReturn = new CartDTO(o2.OrderId, cart);
+
+            return Ok(cartToReturn);
+        }
+
+        // POST: api/Orders
+        [HttpPost]
+        public async Task<ActionResult<Order>> PostOrder([FromBody]JObject data)
+        {
+            //TODO: Validation of data
+            //Get data from post body
+            int orderId = data["orderId"].ToObject<int>();
+
+            //Retrieve connected cart
+
+            Order order = await _context.orders.SingleOrDefaultAsync(x => x.OrderId == orderId);
+
+            //Set Cart to an in progress order
+            order.Status = Statuses.InProgress;
+
+            return Ok(order);
+        }
 
         [HttpPut("toggleActive/{id}")]
         public async Task<IActionResult> UpdateActiveStatus(int id)
@@ -98,6 +137,13 @@ namespace VippsCaseAPI.Controllers
             order = await _context.orders.FirstOrDefaultAsync(x => x.OrderId == id);
 
             order.Active = !order.Active;
+
+            List<OrderItem> orderItemList = await _context.orderItems.Where(x => x.OrderId == id).ToListAsync();
+
+            foreach(OrderItem oi in orderItemList)
+            {
+                oi.Active = !order.Active;
+            }
 
             _context.Entry(order).State = EntityState.Modified;
 
