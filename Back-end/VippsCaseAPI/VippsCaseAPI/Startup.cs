@@ -30,6 +30,16 @@ namespace VippsCaseAPI
         {
             services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration["ConnectionString:VippsCaseDev"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // CORS enable for stripe from localhost testing through Visual Studio Code
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options
+                    .WithOrigins("http://127.0.0.1:5500")
+                    .WithHeaders("content-type", "accept", "origin")
+                    .WithMethods("POST"));
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +55,11 @@ namespace VippsCaseAPI
                 //app.UseHsts();
                 app.UseDeveloperExceptionPage();
             }
+            // CORS enable for stripe from localhost testing through Visual Studio Code
+            app.UseCors(options => options
+                .WithOrigins("http://127.0.0.1:5500")
+                .WithHeaders("content-type", "accept", "origin")
+                .WithMethods("POST"));
 
             app.UseHttpsRedirection();
             app.UseMvc();

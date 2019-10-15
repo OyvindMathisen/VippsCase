@@ -83,7 +83,7 @@ customerForm.addEventListener('submit', (event) => {
 
 async function stripeTokenHandler(token, cost) {
     try {
-        const response = await fetch('https://localhost:44369/charge', {
+        const response = await fetch('https://localhost:44399/api/stripe/charge', {
             method: 'POST',
             body: JSON.stringify({
                 stripeToken: token.id,
@@ -104,7 +104,7 @@ async function stripeTokenHandler(token, cost) {
 
 async function customerTokenHandler(customer) {
     try {
-        const response = await fetch('https://localhost:44369/add-customer', {
+        const response = await fetch('https://localhost:44369/api/stripe/add-customer', {
             method: 'POST',
             body: customer,
             headers: {
