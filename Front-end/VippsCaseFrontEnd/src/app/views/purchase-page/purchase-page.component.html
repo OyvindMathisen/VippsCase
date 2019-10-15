@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
-            <form id="personDetails">
+            <form id="purchaseDetails">
                 <div class="form-group">
                     <label for="formGroupExampleInput">Full Name:</label>
                     <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ola Nordmann">
@@ -22,15 +22,13 @@
                     <input type="text" class="form-control" id="formGroupExampleInput4"
                         placeholder="something@gmail.com">
                 </div>
+                <div class="paymentDetails">
+                    <app-stripe-card-input [stripe]='this.stripe' [(card)]='card'></app-stripe-card-input>
+                </div>
+                <div class="submit">
+                    <button id="purchaseBtn" class="btn btn-success btn-block">Purchase</button>
+                </div>
             </form>
-
-            <div class="paymentDetails">
-                <p>THIS IS WHERE THE STRIPE INTEGRATION WILL HAPPEN (?)</p>
-            </div>
-
-            <div class="submit">
-                <button type="button" id="purchaseBtn" class="btn btn-success btn-block">Purchase</button>
-            </div>
 
         </div>
 

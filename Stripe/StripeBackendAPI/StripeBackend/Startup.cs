@@ -6,15 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using VippsCaseAPI.DataAccess;
-using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
-namespace VippsCaseAPI
+namespace StripeBackend
 {
     public class Startup
     {
@@ -28,14 +25,12 @@ namespace VippsCaseAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration["ConnectionString:VippsCaseDev"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            // CORS enable for stripe from localhost testing through Visual Studio Code
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", options => options
-                    .WithOrigins("http://127.0.0.1:5500", "http://localhost:4200")
+                    .WithOrigins("http://127.0.0.1:5500")
                     .WithHeaders("content-type", "accept", "origin")
                     .WithMethods("POST"));
 
@@ -52,12 +47,10 @@ namespace VippsCaseAPI
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                //app.UseHsts();
-                app.UseDeveloperExceptionPage();
+                app.UseHsts();
             }
-            // CORS enable for stripe from localhost testing through Visual Studio Code
             app.UseCors(options => options
-                .WithOrigins("http://127.0.0.1:5500", "http://localhost:4200")
+                .WithOrigins("http://127.0.0.1:5500")
                 .WithHeaders("content-type", "accept", "origin")
                 .WithMethods("POST"));
 
