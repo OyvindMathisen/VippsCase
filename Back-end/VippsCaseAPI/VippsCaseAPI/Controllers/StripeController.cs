@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using Stripe;
 using VippsCaseAPI.DataAccess;
 using VippsCaseAPI.Models.Stripe;
@@ -20,7 +21,7 @@ namespace VippsCaseAPI.Controllers
 
         [HttpPost]
         [Route("charge")]
-        public ActionResult<StripeResult> Post([FromBody] StripeCard value)
+        public ActionResult<StripeResult> Post([FromBody] StripeCharge value)
         {
             StripeConfiguration.ApiKey = StripeApiKey;
             ChargeCreateOptions options = new ChargeCreateOptions
@@ -38,7 +39,29 @@ namespace VippsCaseAPI.Controllers
             {
                 Charge charge = service.Create(options);
                 result.Successful = true;
-                result.ResultToken = charge.Id;
+                result.Data = charge.Id;
+            }
+            catch (StripeException exception)
+            {
+                result.Successful = false;
+                result.ErrorMessage = _stripeErrorHandler.ErrorHandler(exception);
+            }
+
+            return result;
+        }
+
+        [HttpGet("get-charge")]
+        public ActionResult<StripeResult> Get([FromBody] StripeChargeRequest value)
+        {
+            StripeConfiguration.ApiKey = StripeApiKey;
+
+            StripeResult result = new StripeResult();
+            ChargeService service = new ChargeService();
+            try
+            {
+                Charge charge = service.Get(value.Id);
+                result.Data = charge;
+                result.Successful = true;
             }
             catch (StripeException exception)
             {
@@ -76,7 +99,7 @@ namespace VippsCaseAPI.Controllers
             {
                 Customer customer = service.Create(options);
                 result.Successful = true;
-                result.ResultToken = customer.Id;
+                result.Data = customer.Id;
             }
             catch (StripeException exception)
             {
