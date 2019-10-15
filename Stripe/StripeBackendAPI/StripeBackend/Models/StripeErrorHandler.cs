@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Stripe;
+﻿using Stripe;
 
 namespace StripeBackend.Models
 {
     public class StripeErrorHandler
     {
-        public string ErrorHandler(StripeException exception, object value)
+        private const string CardErrorIntro = "We were unable to charge your payment method for the purchase. ";
+
+        public string ErrorHandler(StripeException exception)
         {
-            System.Diagnostics.Debug.WriteLine("Error Type: " + exception.StripeError.ErrorType);
-            System.Diagnostics.Debug.WriteLine("Code: " + exception.StripeError.Code);
-            System.Diagnostics.Debug.WriteLine("Code Detail: " + exception.StripeError.DeclineCode);
-            System.Diagnostics.Debug.WriteLine("Message: " + exception.StripeError.Message);
-            System.Diagnostics.Debug.WriteLine("Input: " + value);
+            System.Diagnostics.Debug.WriteLine("Error:" + exception.StripeError);
 
             switch (exception.StripeError.ErrorType)
             {
@@ -52,13 +46,13 @@ namespace StripeBackend.Models
             {
                 case "authentication_required":
                     return
-                        "We were unable to charge your payment method for the purchase. Please authenticate your card when prompted to do so.";
+                        CardErrorIntro + "Please authenticate your card when prompted to do so.";
                 case "approve_with_id":
                 case "issuer_not_available":
                 case "reenter_transaction":
                 case "try_again_later":
                     return
-                        "We were unable to charge your payment method for the purchase. Please try again, and if the issue persists, please contact your card issuer.";
+                        CardErrorIntro + "Please try again, and if the issue persists, please contact your card issuer.";
                 case "call_issuer":
                 case "card_not_supported":
                 case "card_velocity_exceeded":
@@ -81,10 +75,10 @@ namespace StripeBackend.Models
                 case "stop_payment_order":
                 case "transaction_not_allowed":
                     return
-                        "We were unable to charge your payment method for the purchase. Please contact your card issuer for further details.";
+                        CardErrorIntro + "Please contact your card issuer for further details.";
                 case "currency_not_supported":
                     return
-                        "We were unable to charge your payment method for the purchase. Check with your card issuer if your card supports our currency.";
+                        CardErrorIntro + "Check with your card issuer if your card supports our currency.";
                 // TODO: Handle duplicate transactions idempotently, sending the customer an "everything went well" with the previous transaction.
                 case "duplicate_transaction":
                     return
@@ -95,7 +89,7 @@ namespace StripeBackend.Models
                 case "testmode_decline":
                 case "withdrawal_count_limit_exceeded":
                     return
-                        "We were unable to charge your payment method for the purchase. Please try another payment method.";
+                        CardErrorIntro + "Please try another payment method.";
                 case "incorrect_number":
                 case "incorrect_cvc":
                 case "incorrect_pin":
@@ -107,17 +101,17 @@ namespace StripeBackend.Models
                 case "offline_pin_required":
                 case "online_or_offline_pin_required":
                     return
-                        "We were unable to charge your payment method for the purchase. Please confirm your details and try again.";
+                        CardErrorIntro + "Please confirm your details and try again.";
                 case "invalid_account":
                 case "invalid_amount":
                     return
-                        "We were unable to charge your payment method for the purchase. Contact your card issuer to ensure your payment method is working correctly.";
+                        CardErrorIntro + "Contact your card issuer to ensure your payment method is working correctly.";
                 case "processing_error":
                     return
-                        "We were unable to charge your payment method for the purchase. Please try again, and if the issue persists try again at a later time.";
+                        CardErrorIntro + "Please try again, and if the issue persists try again at a later time.";
                 default:
                     return
-                        "We were unable to charge your payment method for the purchase. Please contact our customer support for further assistance.";
+                        CardErrorIntro + "Please contact our customer support for further assistance.";
             }
         }
     }

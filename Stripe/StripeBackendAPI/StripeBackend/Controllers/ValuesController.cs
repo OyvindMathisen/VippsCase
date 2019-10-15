@@ -35,7 +35,7 @@ namespace StripeBackend.Controllers
             catch (StripeException exception)
             {
                 result.Successful = false;
-                result.ErrorMessage = _stripeErrorHandler.ErrorHandler(exception, value);
+                result.ErrorMessage = _stripeErrorHandler.ErrorHandler(exception);
             }
 
             return result;
@@ -73,7 +73,7 @@ namespace StripeBackend.Controllers
             catch (StripeException exception)
             {
                 result.Successful = false;
-                result.ErrorMessage = _stripeErrorHandler.ErrorHandler(exception, value);
+                result.ErrorMessage = _stripeErrorHandler.ErrorHandler(exception);
             }
 
             return result;
