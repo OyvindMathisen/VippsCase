@@ -1,6 +1,6 @@
 ﻿namespace VippsCaseAPI.Models.Stripe
 {
-    public class StripeCard
+    public class StripeCharge
     {
         public string StripeToken { get; set; }
         public long TotalCost { get; set; }
