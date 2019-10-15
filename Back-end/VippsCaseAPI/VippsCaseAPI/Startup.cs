@@ -35,7 +35,7 @@ namespace VippsCaseAPI
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", options => options
-                    .WithOrigins("http://127.0.0.1:5500")
+                    .WithOrigins("http://127.0.0.1:5500", "http://localhost:4200")
                     .WithHeaders("content-type", "accept", "origin")
                     .WithMethods("POST"));
 
@@ -57,7 +57,7 @@ namespace VippsCaseAPI
             }
             // CORS enable for stripe from localhost testing through Visual Studio Code
             app.UseCors(options => options
-                .WithOrigins("http://127.0.0.1:5500")
+                .WithOrigins("http://127.0.0.1:5500", "http://localhost:4200")
                 .WithHeaders("content-type", "accept", "origin")
                 .WithMethods("POST"));
 
