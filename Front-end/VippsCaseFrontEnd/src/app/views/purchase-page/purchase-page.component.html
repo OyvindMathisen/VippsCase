@@ -22,15 +22,13 @@
                     <input type="text" class="form-control" id="formGroupExampleInput4"
                         placeholder="something@gmail.com">
                 </div>
+                <div class="paymentDetails">
+                    <app-stripe-card-input [stripe]='this.stripe' [(card)]='card'></app-stripe-card-input>
+                </div>
+                <div class="submit">
+                    <button id="purchaseBtn" class="btn btn-success btn-block">Purchase</button>
+                </div>
             </form>
-
-            <div class="paymentDetails">
-                <app-stripe-card-input></app-stripe-card-input>
-            </div>
-
-            <div class="submit">
-                <button type="button" id="purchaseBtn" class="btn btn-success btn-block">Purchase</button>
-            </div>
 
         </div>
 

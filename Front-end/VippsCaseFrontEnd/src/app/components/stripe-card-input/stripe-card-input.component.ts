@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { StripeService } from '../../services/stripe.service';
-import { environment } from '../../../environments/environment';
+import { Component, OnInit, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-stripe-card-input',
@@ -8,14 +6,13 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./stripe-card-input.component.scss']
 })
 export class StripeCardInputComponent implements OnInit {
-  private card: stripe.elements.Element;
+  @Input() stripe: stripe.Stripe;
+  @Input() @Output() card: any;
 
-  constructor(private stripeService: StripeService) {
-    // Stripe content to let us create the input
-    const stripe = Stripe(environment.stripeKey);
-    const elements = stripe.elements();
-    this.card = elements.create('card', {hidePostalCode: true});
+  constructor() {
+  }
 
+  ngOnInit() {
     // Display error handling to the user
     this.card.on('change', (event) => {
       const displayError = document.getElementById('card-errors');
@@ -25,11 +22,8 @@ export class StripeCardInputComponent implements OnInit {
         displayError.textContent = '';
       }
     });
-  }
 
-  ngOnInit() {
     // Add the card to the component
     this.card.mount('#card-element');
   }
-
 }
