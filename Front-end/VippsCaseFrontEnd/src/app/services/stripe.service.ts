@@ -10,8 +10,8 @@ import { StripeCustomer } from '../shared/models/stripe-customer.model';
 
 export class StripeService {
   private baseUrl = 'https://localhost:44399/api/stripe/';
-  private makeChargeEndpoint = this.baseUrl + '/charge';
-  private addCustomerEndpoint = this.baseUrl + '/add-customer';
+  private makeChargeEndpoint = this.baseUrl + 'charge';
+  private addCustomerEndpoint = this.baseUrl + 'add-customer';
   private options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -21,10 +21,10 @@ export class StripeService {
   constructor(private http: HttpClient) { }
 
   addCharge(charge: StripeCharge): Observable<any> {
-    return this.http.post<StripeCharge>(this.makeChargeEndpoint, charge, this.options);
+    return this.http.post(this.makeChargeEndpoint, charge, this.options);
   }
 
   addCustomer(customer: StripeCustomer): Observable<any> {
-    return this.http.post<StripeCustomer>(this.addCustomerEndpoint, customer, this.options);
+    return this.http.post(this.addCustomerEndpoint, customer, this.options);
   }
 }
