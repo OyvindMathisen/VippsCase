@@ -3,7 +3,7 @@
     public class StripeResult
     {
         public bool Successful { get; set; }
-        public string ResultToken { get; set; }
+        public object Data { get; set; }
         public string ErrorMessage { get; set; }
     }
 }
