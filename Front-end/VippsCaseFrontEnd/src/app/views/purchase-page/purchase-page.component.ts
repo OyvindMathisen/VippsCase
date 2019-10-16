@@ -2,6 +2,7 @@ import { Component, Output, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { environment } from '../../../environments/environment.prod';
 import { StripeService } from '../../services/stripe.service';
 import { StripeCharge } from '../../shared/models/stripe-charge.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-purchase-page',
@@ -14,7 +15,7 @@ export class PurchasePageComponent implements AfterViewInit {
     @Output() stripe: stripe.Stripe;
     @ViewChild('purchaseDetails', {static: false}) purchaseDetails: ElementRef;
 
-    constructor(private stripeService: StripeService) {
+    constructor(private stripeService: StripeService, private router: Router) {
         this.stripe = Stripe(environment.stripeKey);
         const elements = this.stripe.elements();
         this.card = elements.create('card', {hidePostalCode: true});
@@ -55,8 +56,13 @@ export class PurchasePageComponent implements AfterViewInit {
         charge.totalCost = cost;
         // TODO: Change success to a redirect to the success page, and handle other database actions.
         this.stripeService.addCharge(charge).subscribe(
-            (data) => console.log(data),
-            (error) => console.log(error)
+            (data) => {
+                console.log(data);
+                this.router.navigate(['/confirmation']);
+            },
+            (error) => {
+                console.log(error);
+            }
         );
     }
 

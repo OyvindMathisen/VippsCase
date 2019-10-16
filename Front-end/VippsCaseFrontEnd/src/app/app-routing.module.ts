@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: "", component: LoginFormComponent },
   { path: "purchase", component: PurchasePageComponent },
   { path: "confirmation", component: PurchaseConfirmedComponent },
-  { path: "profile", component: PurchaseHistoryComponent }
+  { path: "profile", component: PurchaseHistoryComponent },
+  { path: '**', component: PurchasePageComponent } // TODO: Replace with 404 page
 ];
 
 @NgModule({
