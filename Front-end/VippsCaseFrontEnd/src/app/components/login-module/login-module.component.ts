@@ -40,7 +40,7 @@ export class LoginModuleComponent implements OnInit {
     this.loginService.login(this.login).subscribe(
       data => {
         this.router.navigate(['/purchase']);
-        console.log(data);
+        console.log(data['token']);
         this.loginError = false;
       },
       error => {
