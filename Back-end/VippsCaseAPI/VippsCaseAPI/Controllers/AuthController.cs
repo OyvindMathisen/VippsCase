@@ -83,11 +83,11 @@ namespace VippsCaseAPI.Controllers
 
                 if (hashedPassword == p.PasswordHash)
                 {
-                    return Ok(generateToken());
+                    return Ok(new LoginDTO(generateToken(), "User Validated"));
                 }
                 else
                 {
-                    return Unauthorized("User Validation Failed!");
+                    return Unauthorized(new LoginDTO("User Validation Failed"));
                 }
             }
             catch(Exception e)

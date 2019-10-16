@@ -24,6 +24,7 @@ namespace VippsCaseAPI.Controllers
 
         // GET: api/Items
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Item>>> Getitems()
         {
             return await _context.items.Where(x => x.Active == true).ToListAsync();
