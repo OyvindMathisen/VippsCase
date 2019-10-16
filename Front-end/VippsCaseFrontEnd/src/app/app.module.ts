@@ -16,6 +16,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { ErrorComponent } from './components/error/error.component';
+import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ErrorComponent } from './components/error/error.component';
     NavBarComponent,
     FooterComponent,
     ProfileDetailsComponent,
-    ErrorComponent
+    ErrorComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
