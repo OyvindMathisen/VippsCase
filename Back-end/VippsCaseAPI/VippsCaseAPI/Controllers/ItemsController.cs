@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ namespace VippsCaseAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Item>>> Getitems()
         {
-            return await _context.items.ToListAsync();
+            return await _context.items.Where(x => x.Active == true).ToListAsync();
         }
 
         // GET: api/Items/5
