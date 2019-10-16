@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
-            <form id="purchaseDetails">
+            <form id="purchaseDetails" #purchaseDetails>
                 <div class="form-group">
                     <label for="formGroupExampleInput">Full Name:</label>
                     <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ola Nordmann">
@@ -23,7 +23,7 @@
                         placeholder="something@gmail.com">
                 </div>
                 <div class="paymentDetails">
-                    <app-stripe-card-input [stripe]='this.stripe' [(card)]='card'></app-stripe-card-input>
+                    <app-stripe-card-input [stripe]='stripe' [card]='card' (cardChanged)='onCardChanged($event)'></app-stripe-card-input>
                 </div>
                 <div class="submit">
                     <button id="purchaseBtn" class="btn btn-success btn-block">Purchase</button>

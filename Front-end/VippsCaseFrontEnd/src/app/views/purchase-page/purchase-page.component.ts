@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input } from '@angular/core';
+import { Component, Output, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { environment } from '../../../environments/environment.prod';
 import { StripeService } from '../../services/stripe.service';
 import { StripeCharge } from '../../shared/models/stripe-charge.model';
@@ -8,9 +8,11 @@ import { StripeCharge } from '../../shared/models/stripe-charge.model';
     templateUrl: './purchase-page.component.html',
     styleUrls: ['./purchase-page.component.scss']
 })
-export class PurchasePageComponent implements OnInit {
-    @Input()@Output() card: any;
+export class PurchasePageComponent implements AfterViewInit {
+    card: any;
+    cardError: any;
     @Output() stripe: stripe.Stripe;
+    @ViewChild('purchaseDetails', {static: false}) purchaseDetails: ElementRef;
 
     constructor(private stripeService: StripeService) {
         this.stripe = Stripe(environment.stripeKey);
@@ -18,9 +20,10 @@ export class PurchasePageComponent implements OnInit {
         this.card = elements.create('card', {hidePostalCode: true});
     }
 
-    ngOnInit() {
-        const form = document.getElementById('purchaseDetails');
-        form.addEventListener('submit', (event) => {
+    // Needs to be after the view has been initialized, if not we do not have access to the purchaseDetails form.
+    ngAfterViewInit() {
+        const form = this.purchaseDetails.nativeElement;
+        form.addEventListener('submit', (event: any) => {
             event.preventDefault();
 
             // TODO: Replace this with the totalCost from the shoppingCart
@@ -30,7 +33,7 @@ export class PurchasePageComponent implements OnInit {
             this.stripe.createToken(this.card).then((result) => {
                 if (result.error) {
                     // Inform the user if there was an error
-                    const errorElement = document.getElementById('card-errors');
+                    const errorElement = this.cardError.nativeElement;
                     errorElement.textContent = result.error.message;
                 } else {
                     // Send the token to the server
@@ -38,6 +41,11 @@ export class PurchasePageComponent implements OnInit {
                 }
             });
         });
+    }
+
+    onCardChanged(event: any) {
+        this.card = event.card;
+        this.cardError = event.cardErrors;
     }
 
     stripeTokenHandler(token: string, cost: number) {
