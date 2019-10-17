@@ -6,6 +6,7 @@
         public string AddressLineOne { get; set; }
         public string AddressLineTwo { get; set; }
         public string PostalCode { get; set; }
+        public string County { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         public string Email { get; set; }
@@ -14,7 +15,7 @@
         public override string ToString()
         {
             return $"Name: {Name}, AddressLineOne: {AddressLineOne}, AddressLineTwo: {AddressLineTwo}," +
-                   $"PostalCode: {PostalCode}, City: {City}, Country: {Country}," +
+                   $"PostalCode: {PostalCode}, County: {County}, City: {City}, Country: {Country}," +
                    $"Email: {Email}, Phone: {Phone}.";
         }
     }
