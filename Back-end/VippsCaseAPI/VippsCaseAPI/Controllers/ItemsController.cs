@@ -78,13 +78,13 @@ namespace VippsCaseAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Item>> PostItem(Item item)
         {
+            item.Active = true;
             _context.items.Add(item);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetItem", new { id = item.ItemId }, item);
         }
 
-        // PUT: api/Items/5
         [HttpPut("toggleActive/{id}")]
         public async Task<IActionResult> UpdateActiveStatus(int id)
         {
