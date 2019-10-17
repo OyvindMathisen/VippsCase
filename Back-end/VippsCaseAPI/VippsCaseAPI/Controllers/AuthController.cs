@@ -83,7 +83,7 @@ namespace VippsCaseAPI.Controllers
 
                 if (hashedPassword == p.PasswordHash)
                 {
-                    return Ok(new LoginDTO(generateToken(), "User Validated"));
+                    return Ok(new LoginDTO(generateToken(u), "User Validated"));
                 }
                 else
                 {
@@ -96,18 +96,30 @@ namespace VippsCaseAPI.Controllers
             }
         }
 
-        private string generateToken()
+        private string generateToken(User user)
         {
             var key = Encoding.UTF8.GetBytes("super_secret_key_6060JK");
 
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
+
+            List<Claim> claims = new List<Claim>
+            {
+            new Claim("Email", user.Email),
+            new Claim("Address", user.Address),
+            new Claim("FirstName", user.Firstname),
+            new Claim("LastName", user.Lastname),
+            new Claim("Phone", user.PhoneNr),
+            new Claim("UserId", user.UserId.ToString()),
+            //More custom claims
+            };
 
             var token = new JwtSecurityToken
             (
                 issuer: "admin",
                 audience: "user",
                 expires: DateTime.Now.AddHours(8),
-                signingCredentials: signingCredentials
+                signingCredentials: signingCredentials,
+                claims: claims
             ); 
 
             return new JwtSecurityTokenHandler().WriteToken(token);
