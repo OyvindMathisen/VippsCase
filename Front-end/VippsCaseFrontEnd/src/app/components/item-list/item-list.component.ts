@@ -20,13 +20,18 @@ export class ItemListComponent implements OnInit {
 
   ngOnInit() {
     // Get items here.
-    this.cartService.getItem().subscribe((data) => {
-      this.items = data;
-    })
+    // this.cartService.getItem().subscribe((data) => {
+    //   this.items = data;
+    // })
 
-    const token = localStorage.getItem('id_token');
-    console.log(atob(token.split('.')[1]));
     
+  }
+
+  getCart(){
+    //Get new cart:
+    this.cartService.newCart(parseInt(localStorage.getItem('user_id'))).subscribe((data) =>{
+      console.log(data);
+    })
   }
 
 }
