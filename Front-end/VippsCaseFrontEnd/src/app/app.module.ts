@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { ErrorComponent } from './components/error/error.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
+import { PersonInformationComponent } from './components/person-information/person-information.component';
 
 @NgModule({
   declarations: [
@@ -33,12 +35,15 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
     FooterComponent,
     ProfileDetailsComponent,
     ErrorComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PersonInformationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
