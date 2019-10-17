@@ -23,6 +23,10 @@ export class ItemListComponent implements OnInit {
     this.cartService.getItem().subscribe((data) => {
       this.items = data;
     })
+
+    const token = localStorage.getItem('id_token');
+    console.log(atob(token.split('.')[1]));
+    
   }
 
 }
