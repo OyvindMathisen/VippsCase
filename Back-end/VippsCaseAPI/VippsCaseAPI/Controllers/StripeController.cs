@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using Stripe;
 using VippsCaseAPI.DataAccess;
 using VippsCaseAPI.Models.Stripe;
@@ -28,6 +27,7 @@ namespace VippsCaseAPI.Controllers
             {
                 Amount = value.TotalCost,
                 Currency = "nok",
+                // TODO: Update description to be more descriptive.
                 Description = "Test charge.",
                 Source = value.StripeToken,
             };
@@ -40,6 +40,8 @@ namespace VippsCaseAPI.Controllers
                 Charge charge = service.Create(options);
                 result.Successful = true;
                 result.Data = charge.Id;
+
+                // TODO: Send charge and value.CustomerDetails into our database for further storage.
             }
             catch (StripeException exception)
             {
@@ -62,44 +64,6 @@ namespace VippsCaseAPI.Controllers
                 Charge charge = service.Get(value.Id);
                 result.Data = charge;
                 result.Successful = true;
-            }
-            catch (StripeException exception)
-            {
-                result.Successful = false;
-                result.ErrorMessage = _stripeErrorHandler.ErrorHandler(exception);
-            }
-
-            return result;
-        }
-
-        [HttpPost]
-        [Route("add-customer")]
-        public ActionResult<StripeResult> Post([FromBody] StripeCustomer value)
-        {
-            StripeConfiguration.ApiKey = StripeApiKey;
-            CustomerCreateOptions options = new CustomerCreateOptions
-            {
-                Name = value.Name,
-                Email = value.Email,
-                Phone = value.Phone,
-                Address = new AddressOptions
-                {
-                    Line1 = value.AddressLineOne,
-                    Line2 = value.AddressLineTwo,
-                    PostalCode = value.PostalCode,
-                    City = value.City,
-                    Country = value.Country
-                },
-                Description = "Test customer"
-            };
-
-            StripeResult result = new StripeResult();
-            CustomerService service = new CustomerService();
-            try
-            {
-                Customer customer = service.Create(options);
-                result.Successful = true;
-                result.Data = customer.Id;
             }
             catch (StripeException exception)
             {
