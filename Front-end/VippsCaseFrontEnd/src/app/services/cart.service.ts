@@ -9,11 +9,12 @@ export class CartService {
   constructor(private http: HttpClient) { }
 
   getItem(){
+    const token = localStorage.getItem('id_token');
     const headerDict = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Access-Control-Allow-Headers': 'Content-Type',
-      'Authorization': 'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzEyNDM0NTEsImlzcyI6ImFkbWluIiwiYXVkIjoidXNlciJ9.oznLBqwCO5ZuKiP50xc2kGSOhZBcl-LbijGLjbOoxb8'
+      'Authorization': `Bearer ${token}`
     }
     
     const requestOptions = {                                                                                                                                                                                 
