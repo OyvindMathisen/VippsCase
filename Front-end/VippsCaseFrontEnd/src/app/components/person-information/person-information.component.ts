@@ -21,8 +21,8 @@ export class PersonInformationComponent implements OnInit {
       county: new FormControl('', [Validators.required]),
       postNumber: new FormControl('', [Validators.required, Validators.pattern('\\d{4}')]),
       city: new FormControl('', [Validators.required]),
-      phoneNumber: new FormControl('', [Validators.required, Validators.pattern('\\d{8}')]),
-      email: new FormControl('', [Validators.required])
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern('(?:\\d{2} ?){4}|\\d{3} ?\\d{2} ?\\d{3}')]),
+      email: new FormControl('', [Validators.required, Validators.email])
     });
   }
 

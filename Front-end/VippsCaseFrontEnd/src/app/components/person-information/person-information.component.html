@@ -61,7 +61,7 @@
             <!-- TODO: Move the phoneNumberCode element in front of phoneNumber, but much smaller in width. -->
             <input name="phoneNumberCode" type="text" value="+47" disabled>
             <input name="phoneNumber" formControlName="phoneNumber" type="text" placeholder="99 99 99 99" required
-                pattern="\d{8}">
+                pattern="(?:\d{2} ?){4}|\d{3} ?\d{2} ?\d{3}">
 
             <div *ngIf="getPhoneNumber().invalid && (getPhoneNumber().dirty || getPhoneNumber().touched)">
                 <p *ngIf="getPhoneNumber().errors.required">Phone number is required.</p>
