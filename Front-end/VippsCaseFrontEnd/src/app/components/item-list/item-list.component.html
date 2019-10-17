@@ -3,14 +3,5 @@
 </div>
 
 <!-- Import the class here from the .ts file-->
-<div [ngClass]="displayType" *ngFor = "let item of items" class="item">
-    <div id="row-1">
-        <div class="col-lg-2"><img src="{{ item.imageUrl }}" alt="{{ item.name }} image"></div>
-    </div>
-    <div class="row-2">
-        <div class="col-lg-8">{{ item.name }}</div>
-        <div class="col-lg-2">{{ item.price }}</div>
-    </div>
-    <br/>
-    <br/>
-</div>
+
+    <app-item></app-item>
