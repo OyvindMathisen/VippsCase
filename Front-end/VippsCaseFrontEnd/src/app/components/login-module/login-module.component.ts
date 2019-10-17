@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { LoginService } from "../../services/login.service";
 import { Login } from "../../shared/models/login.model";
 import { Router } from '@angular/router';
+//import * as moment from "moment";
 
 
 @Component({
@@ -39,9 +40,14 @@ export class LoginModuleComponent implements OnInit {
     
     this.loginService.login(this.login).subscribe(
       data => {
+        //Navigate to purchase
         this.router.navigate(['/purchase']);
-        console.log(data);
+        //Set sessiontoken
+        this.setSession(data.token, );
+        //disable login error message
         this.loginError = false;
+
+        console.log(localStorage.getItem("id_token"));
       },
       error => {
         console.log(error);
@@ -54,4 +60,14 @@ export class LoginModuleComponent implements OnInit {
     // Returning false to prevent the page from updating
     return false;
   }
+
+  private setSession(token) {
+    //const expiresAt = moment().add(authResult.expiresIn,'second');
+
+    localStorage.setItem('id_token', token);
+    const payload = atob(token.split('.')[1])
+    const userId = JSON.parse(payload)['UserId'];
+    localStorage.setItem('user_id', userId)
+    //localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
+}  
 }
