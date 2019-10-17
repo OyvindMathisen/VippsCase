@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using VippsCaseAPI.DataAccess;
+using VippsCaseAPI.DTOs;
 using VippsCaseAPI.Models;
 
 namespace VippsCaseAPI.Controllers
@@ -65,22 +69,60 @@ namespace VippsCaseAPI.Controllers
             //TODO: Input validation
 
             string email = data["email"].ToString();
+
             string password = data["password"].ToString();
 
-            User u = await _context.users.FirstOrDefaultAsync(x => x.Email == email);
-
-            Password p = await _context.passwords.FirstOrDefaultAsync(x => x.UserId == u.UserId);
-
-            string hashedPassword = ComputeSha512Hash(password + p.Salt);
-
-            if (hashedPassword == p.PasswordHash)
+            try
             {
-                return Ok("User Validated!");
+                User u = await _context.users.FirstOrDefaultAsync(x => x.Email == email);
+            
+
+                Password p = await _context.passwords.FirstOrDefaultAsync(x => x.UserId == u.UserId);
+
+                string hashedPassword = ComputeSha512Hash(password + p.Salt);
+
+                if (hashedPassword == p.PasswordHash)
+                {
+                    return Ok(new LoginDTO(generateToken(u), "User Validated"));
+                }
+                else
+                {
+                    return Unauthorized(new LoginDTO("User Validation Failed"));
+                }
             }
-            else
+            catch(Exception e)
             {
-                return Unauthorized("User Validation Failed!");
+                return Unauthorized("Invalid username or password");
             }
+        }
+
+        private string generateToken(User user)
+        {
+            var key = Encoding.UTF8.GetBytes("super_secret_key_6060JK");
+
+            var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
+
+            List<Claim> claims = new List<Claim>
+            {
+            new Claim("Email", user.Email),
+            new Claim("Address", user.Address),
+            new Claim("FirstName", user.Firstname),
+            new Claim("LastName", user.Lastname),
+            new Claim("Phone", user.PhoneNr),
+            new Claim("UserId", user.UserId.ToString()),
+            //More custom claims
+            };
+
+            var token = new JwtSecurityToken
+            (
+                issuer: "admin",
+                audience: "user",
+                expires: DateTime.Now.AddHours(8),
+                signingCredentials: signingCredentials,
+                claims: claims
+            ); 
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         //TODO: Seperation of concern
@@ -97,10 +139,10 @@ namespace VippsCaseAPI.Controllers
         static string ComputeSha512Hash(string rawData)
         {
             // Create a SHA256   
-            using (SHA512 sha256Hash = SHA512.Create())
+            using (SHA512 sha512Hash = SHA512.Create())
             {
                 // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+                byte[] bytes = sha512Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
 
                 // Convert byte array to a string   
                 StringBuilder builder = new StringBuilder();
