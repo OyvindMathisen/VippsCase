@@ -20,7 +20,7 @@ export class LoginService {
         headers: new HttpHeaders({
                 'Content-Type': 'application/json',
             }), 
-        responseType: 'text'}).pipe(
+        responseType: 'json'}).pipe(
             data => data,
             error => error
         );

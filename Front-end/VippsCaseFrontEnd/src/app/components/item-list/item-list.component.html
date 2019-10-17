@@ -1,11 +1,13 @@
-<div *ngIf = "items.length < 1">
+<div *ngIf = "items && items.length < 1">
     <p>No items in cart</p>
 </div>
 
 <!-- Import the class here from the .ts file-->
-<div [ngClass]="displayType" *ngFor = "let item of items">
-    <div class="row">
-        <div class="col-lg-2"><img src="{{ item.img }}" alt=""></div>
+<div [ngClass]="displayType" *ngFor = "let item of items" class="item">
+    <div id="row-1">
+        <div class="col-lg-2"><img src="{{ item.imageUrl }}" alt="{{ item.name }} image"></div>
+    </div>
+    <div class="row-2">
         <div class="col-lg-8">{{ item.name }}</div>
         <div class="col-lg-2">{{ item.price }}</div>
     </div>
