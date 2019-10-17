@@ -12,7 +12,7 @@ export class ItemListComponent implements OnInit {
   @Input() displayType: string = '';
 
   items;
-
+  
   constructor(
     // Init the service here
     private cartService: CartService
@@ -20,9 +20,17 @@ export class ItemListComponent implements OnInit {
 
   ngOnInit() {
     // Get items here.
-    this.cartService.getItem().subscribe((data) => {
-      
-      this.items = data;
+    // this.cartService.getItem().subscribe((data) => {
+    //   this.items = data;
+    // })
+
+    
+  }
+
+  getCart(){
+    //Get new cart:
+    this.cartService.newCart(parseInt(localStorage.getItem('user_id'))).subscribe((data) =>{
+      console.log(data);
     })
   }
 
