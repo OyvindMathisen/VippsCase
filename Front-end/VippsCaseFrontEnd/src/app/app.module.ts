@@ -34,7 +34,7 @@ import { PersonInformationComponent } from './components/person-information/pers
     BillComponent,
     NavBarComponent,
     FooterComponent,
-    StripeCardInputComponent
+    StripeCardInputComponent,
     ProfileDetailsComponent,
     ErrorComponent,
     PageNotFoundComponent,
