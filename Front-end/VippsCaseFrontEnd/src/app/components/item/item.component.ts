@@ -10,9 +10,9 @@ export class ItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // this.cartService.getItem().subscribe((data) => {
-    //   this.items = data;
-    // })
+    this.cartService.getItem().subscribe((data) => {
+      this.items = data;
+    })
   }
 
 }

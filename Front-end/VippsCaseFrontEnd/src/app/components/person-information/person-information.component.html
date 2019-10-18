@@ -60,11 +60,12 @@
     <input name="phoneNumber" formControlName="phoneNumber" type="text" placeholder="99 99 99 99" required
       pattern="(?:\d{2} ?){4}|\d{3} ?\d{2} ?\d{3}">
 
-    <div *ngIf="getPhoneNumber().invalid && (getPhoneNumber().dirty || getPhoneNumber().touched)">
-      <p *ngIf="getPhoneNumber().errors.required">Phone number is required.</p>
-      <p *ngIf="!getPhoneNumber().errors.requiredPattern">Your phone number has to consist of 8 digits.</p>
-    </div>
-  </div>
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number: </label><br>
+            <!-- TODO: Move the phoneNumberCode element in front of phoneNumber, but much smaller in width. -->
+            <input id="phoneNumberCode" type="text" value="+47" disabled>
+            <input id="phoneInput" name="phoneNumber" formControlName="phoneNumber" type="text" placeholder="99 99 99 99" required
+                pattern="(?:\d{2} ?){4}|\d{3} ?\d{2} ?\d{3}">
 
   <div class="form-group">
     <label for="email">Email: </label><br>

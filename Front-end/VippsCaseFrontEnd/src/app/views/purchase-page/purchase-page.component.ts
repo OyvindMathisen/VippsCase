@@ -26,7 +26,7 @@ export class PurchasePageComponent {
     this.card = elements.create('card', { hidePostalCode: true });
   }
 
-  tempMethod(event: any) {
+  createCharge(event: any) {
     // TODO: Replace this with the totalCost from the shoppingCart
     // NOTE: Multiply the sum with 100, as Stripe calculates from the lowest denominator, which is "øre" in nok.
     const cost = 1000 * 100;
