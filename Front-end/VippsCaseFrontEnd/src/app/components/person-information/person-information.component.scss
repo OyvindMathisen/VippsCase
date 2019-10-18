@@ -5,6 +5,10 @@
     width: 260px;
 }
 
+.submit{
+    margin-top: 10px;
+}
+
 input{
     border: none;
     padding: 5px 5px;
@@ -15,4 +19,12 @@ input{
 p {
     color: red;
     font-size: 13px;
+}
+
+.required-fields{
+    font-size: 12px;
+}
+
+.required{
+    color: red;
 }
