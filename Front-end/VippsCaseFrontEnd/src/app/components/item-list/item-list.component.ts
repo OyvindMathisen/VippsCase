@@ -8,11 +8,11 @@ import { CartService } from '../../services/cart.service';
 })
 export class ItemListComponent implements OnInit {
 
-  //@Input() anyClassNameYouWant: string = 'any text or no text';
-  @Input() displayType: string = '';
+  // @Input() anyClassNameYouWant: string = 'any text or no text';
+  @Input() displayType = '';
 
-  items;
-  
+  items: any;
+
   constructor(
     // Init the service here
     private cartService: CartService
@@ -20,18 +20,16 @@ export class ItemListComponent implements OnInit {
 
   ngOnInit() {
     // Get items here.
-    // this.cartService.getItem().subscribe((data) => {
-    //   this.items = data;
-    // })
-
-    
+    this.cartService.getItem().subscribe((data) => {
+      this.items = data;
+    });
   }
 
   getCart(){
-    //Get new cart:
-    this.cartService.newCart(parseInt(localStorage.getItem('user_id'))).subscribe((data) =>{
+    // Get new cart:
+    this.cartService.newCart(parseInt(localStorage.getItem('user_id'), 10)).subscribe((data) => {
       console.log(data);
-    })
+    });
   }
 
 }
