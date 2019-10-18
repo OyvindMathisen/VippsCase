@@ -26,12 +26,12 @@ export class PersonInformationComponent implements OnInit {
   ngOnInit() {
     // Initializing the FormGroup for input and validation.
     this.personDetails = new FormGroup({
-      fullName: new FormControl('', [Validators.required]),
+      fullName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
       addressLineOne: new FormControl('', [Validators.required]),
       addressLineTwo: new FormControl(''),
-      county: new FormControl('', [Validators.required]),
+      county: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
       postNumber: new FormControl('', [Validators.required, Validators.pattern('\\d{4}')]),
-      city: new FormControl('', [Validators.required]),
+      city: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
       phoneNumber: new FormControl('', [Validators.required, Validators.pattern('(?:\\d{2} ?){4}|\\d{3} ?\\d{2} ?\\d{3}')]),
       email: new FormControl('', [Validators.required, Validators.email])
     });

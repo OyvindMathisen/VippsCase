@@ -9,11 +9,12 @@
     <span class="required">* </span>
     <label for="fullName">Full Name: </label><br>
     <input name="fullName" formControlName="fullName" type="text" placeholder="Ola Nordmann"
-      onfocus="this.placeholder = ''" onblur="this.placeholder = 'Ola Nordmann'" required>
+      onfocus="this.placeholder = ''" onblur="this.placeholder = 'Ola Nordmann'" required pattern="^[a-zA-Z ]*$">
 
     <!-- Error messages if, for example, the customer didn't fill in all of the values. -->
     <div *ngIf="getFullName().invalid && (getFullName().dirty || getFullName().touched)">
       <p *ngIf="getFullName().errors.required">Name is required.</p>
+      <p *ngIf="!getFullName().errors.requiredPattern">Only letters are accepted for name</p>
     </div>
   </div>
 
@@ -30,18 +31,19 @@
 
   <div class="form-group">
     <label for="addressLineTwo">Address Line 2: </label><br>
-    <input name="addressLineTwo" formControlName="addressLineTwo" type="text" placeholder="H0501"
-      onfocus="this.placeholder = ''" onblur="this.placeholder = 'H0501'">
+    <input name="addressLineTwo" formControlName="addressLineTwo" type="text" placeholder="Something Street 49"
+      onfocus="this.placeholder = ''" onblur="this.placeholder = 'Something Street 49'">
   </div>
 
   <div class="form-group">
     <span class="required">* </span>
     <label for="county">County: </label><br>
     <input name="county" formControlName="county" type="text" placeholder="Oslo" onfocus="this.placeholder = ''"
-      onblur="this.placeholder = 'Oslo'" required>
+      onblur="this.placeholder = 'Oslo'" required pattern="^[a-zA-Z ]*$">
 
     <div *ngIf="getCounty().invalid && (getCounty().dirty || getCounty().touched)">
       <p *ngIf="getCounty().errors.required">County is required.</p>
+      <p *ngIf="!getCounty().errors.requiredPattern">Only letters are accepted for counties</p>
     </div>
   </div>
 
@@ -61,10 +63,11 @@
     <span class="required">* </span>
     <label for="city">City: </label><br>
     <input name="city" formControlName="city" type="text" placeholder="Oslo" onfocus="this.placeholder = ''"
-      onblur="this.placeholder = 'Oslo'" required>
+      onblur="this.placeholder = 'Oslo'" required pattern="^[a-zA-Z ]*$">
 
     <div *ngIf="getCity().invalid && (getCity().dirty || getCity().touched)">
       <p *ngIf="getCity().errors.required">City is required.</p>
+      <p *ngIf="!getCity().errors.requiredPattern">Only letters are accepted for cities</p>
     </div>
   </div>
 
