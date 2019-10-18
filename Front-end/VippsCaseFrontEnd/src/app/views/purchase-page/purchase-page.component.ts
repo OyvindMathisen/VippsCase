@@ -53,7 +53,10 @@ export class PurchasePageComponent {
     this.stripeService.addCharge(charge).subscribe(
       (data) => {
         console.log(data);
-        this.router.navigate(['/confirmation']);
+
+        if (data.successful) {
+          this.router.navigate(['/confirmation']);
+        }
       },
       (error) => {
         console.log(error);
