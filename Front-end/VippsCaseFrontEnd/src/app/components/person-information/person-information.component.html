@@ -52,6 +52,15 @@
       <p *ngIf="getCity().errors.required">City is required.</p>
     </div>
   </div>
+  
+  <div class="form-group">
+    <label for="country">Country: </label><br>
+    <input name="country" formControlName="country" type="text" placeholder="Norway" required>
+
+    <div *ngIf="getCity().invalid && (getCity().dirty || getCity().touched)">
+      <p *ngIf="getCity().errors.required">Country is required.</p>
+    </div>
+  </div>
 
   <div class="form-group">
     <label for="phoneNumber">Phone Number: </label><br>

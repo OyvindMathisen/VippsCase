@@ -3,6 +3,7 @@ export interface StripeCustomer {
     addressLineOne: string;
     addressLineTwo: string;
     postalCode: string;
+    county: string;
     city: string;
     country: string;
     email: string;

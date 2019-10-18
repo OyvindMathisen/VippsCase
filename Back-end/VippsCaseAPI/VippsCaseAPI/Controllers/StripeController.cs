@@ -61,6 +61,7 @@ namespace VippsCaseAPI.Controllers
                     County = value.CustomerDetails.County,
                     PostalCode = value.CustomerDetails.PostalCode,
                     City = value.CustomerDetails.City,
+                    Country = value.CustomerDetails.Country,
                     PhoneNumber = value.CustomerDetails.Phone,
                     Email = value.CustomerDetails.Email
                 };
