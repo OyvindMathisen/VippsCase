@@ -23,7 +23,24 @@ export class PurchasePageComponent {
     this.stripe = Stripe(environment.stripeKey);
     const elements = this.stripe.elements();
     // Stripe Card Init
-    this.card = elements.create('card', { hidePostalCode: true });
+    
+    var style = {
+      base: {
+        color: '#000000',
+        fontFamily: '"Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif',
+        fontSmoothing: 'antialiased',
+        iconColor: '#000000',
+        fontSize: '16px', '::placeholder': {
+          color: '#c4c4c4'
+        } 
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a'
+      }
+    };
+
+    this.card = elements.create('card', {style: style, hidePostalCode: true });
   }
 
   createCharge(event: any) {
