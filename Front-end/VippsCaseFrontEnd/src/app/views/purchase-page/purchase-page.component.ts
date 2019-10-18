@@ -3,6 +3,7 @@ import { StripeService } from 'src/app/services/stripe.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { StripeCharge } from 'src/app/shared/models/stripe-charge.model';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-purchase-page',
@@ -17,13 +18,21 @@ export class PurchasePageComponent {
   stripe: stripe.Stripe;
   cardError: any;
   card: any;
+  items: any; 
 
-  constructor(private stripeService: StripeService, private router: Router) {
+  constructor(private stripeService: StripeService, private router: Router, private cartService: CartService) {
     // Stripe Init
     this.stripe = Stripe(environment.stripeKey);
     const elements = this.stripe.elements();
     // Stripe Card Init
     this.card = elements.create('card', { hidePostalCode: true });
+  }
+
+  ngOnInit() {
+    // Get items here.
+    this.cartService.getItem().subscribe((data) => {
+      this.items = data;
+    });
   }
 
   createCharge(event: any) {

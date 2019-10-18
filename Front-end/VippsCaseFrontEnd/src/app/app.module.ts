@@ -20,6 +20,7 @@ import { StripeCardInputComponent } from './components/stripe-card-input/stripe-
 import { ErrorComponent } from './components/error/error.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { PersonInformationComponent } from './components/person-information/person-information.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PersonInformationComponent } from './components/person-information/pers
     ProfileDetailsComponent,
     ErrorComponent,
     PageNotFoundComponent,
-    PersonInformationComponent
+    PersonInformationComponent,
+    OrderListComponent
   ],
   imports: [
     BrowserModule,

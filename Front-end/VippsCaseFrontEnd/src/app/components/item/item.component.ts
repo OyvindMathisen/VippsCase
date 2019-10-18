@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from '../../services/cart.service';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-item',
@@ -7,14 +6,11 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./item.component.scss']
 })
 export class ItemComponent implements OnInit {
-  items: any;
+  @Input() item: any;
 
-  constructor(private cartService: CartService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.cartService.getItem().subscribe((data) => {
-      this.items = data;
-    });
+    
   }
-
 }

@@ -1,0 +1,7 @@
+<div *ngIf = "orders.length < 1">
+    <p>No order history yet</p>
+</div>
+
+<div *ngFor = "let order of orders">
+    <app-item-list [items] = "order.items"></app-item-list>
+</div>
