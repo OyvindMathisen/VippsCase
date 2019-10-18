@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-item-list',
@@ -10,26 +9,22 @@ export class ItemListComponent implements OnInit {
 
   // @Input() anyClassNameYouWant: string = 'any text or no text';
   @Input() displayType = '';
+  @Input() items: any;
 
-  items: any;
-
-  constructor(
-    // Init the service here
-    private cartService: CartService
-  ) { }
+  constructor() {
+  }
 
   ngOnInit() {
-    // Get items here.
-    this.cartService.getItem().subscribe((data) => {
-      this.items = data;
-    });
+    if (!this.items) {
+      this.items = [];
+    }
   }
 
   getCart(){
     // Get new cart:
-    this.cartService.newCart(parseInt(localStorage.getItem('user_id'), 10)).subscribe((data) => {
-      console.log(data);
-    });
+    // this.cartService.newCart(parseInt(localStorage.getItem('user_id'), 10)).subscribe((data) => {
+    //   console.log(data);
+    // });
   }
 
 }
