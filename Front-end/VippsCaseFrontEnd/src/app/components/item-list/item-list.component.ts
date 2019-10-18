@@ -19,17 +19,11 @@ export class ItemListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.items = [];
     // Get items here.
-    this.cartService.getItem().subscribe((data) => {
-      this.items = data;
-    });
-  }
-
-  getCart(){
-    // Get new cart:
-    this.cartService.newCart(parseInt(localStorage.getItem('user_id'), 10)).subscribe((data) => {
-      console.log(data);
-    });
+    // this.cartService.getItem().subscribe((data) => {
+    //   this.items = data;
+    // });
   }
 
 }
