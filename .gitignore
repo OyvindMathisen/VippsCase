@@ -351,3 +351,10 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+Back-end/VippsCaseAPI/VippsCaseAPI/bin/Debug/netcoreapp2.2/VippsCaseAPI.dll
+
+Back-end/VippsCaseAPI/VippsCaseAPI/obj/Debug/netcoreapp2.2/VippsCaseAPI.dll
+
+Back-end/VippsCaseAPI/VippsCaseAPI/obj/Debug/netcoreapp2.2/VippsCaseAPI.RazorAssemblyInfo.cache
+
+Back-end/VippsCaseAPI/VippsCaseAPI/obj/Debug/netcoreapp2.2/VippsCaseAPI.RazorAssemblyInfo.cs

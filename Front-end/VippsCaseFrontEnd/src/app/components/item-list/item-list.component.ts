@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-item-list',
@@ -7,19 +8,28 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ItemListComponent implements OnInit {
 
-  //@Input() anyClassNameYouWant: string = 'any text or no text';
-  @Input() displayType: string = '';
+  // @Input() anyClassNameYouWant: string = 'any text or no text';
+  @Input() displayType = '';
 
-  items = [
-    {img: "url.jpg", name: "Macbook", price: 125},
-    {img: "url.jpg", name: "Alienware", price: 250}
-  ];
+  items: any;
+
   constructor(
     // Init the service here
+    private cartService: CartService
   ) { }
 
   ngOnInit() {
     // Get items here.
+    this.cartService.getItem().subscribe((data) => {
+      this.items = data;
+    });
+  }
+
+  getCart(){
+    // Get new cart:
+    this.cartService.newCart(parseInt(localStorage.getItem('user_id'), 10)).subscribe((data) => {
+      console.log(data);
+    });
   }
 
 }

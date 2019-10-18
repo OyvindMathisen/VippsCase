@@ -40,3 +40,19 @@ C:\Users\sfurul\Desktop\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\n
 C:\Users\sfurul\Desktop\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.RazorTargetAssemblyInfo.cache
 C:\Users\sfurul\Desktop\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.dll
 C:\Users\sfurul\Desktop\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.pdb
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\VippsCaseAPI.deps.json
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\VippsCaseAPI.runtimeconfig.json
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\VippsCaseAPI.runtimeconfig.dev.json
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\VippsCaseAPI.dll
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\VippsCaseAPI.pdb
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.csprojAssemblyReference.cache
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.RazorAssemblyInfo.cache
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.RazorAssemblyInfo.cs
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.AssemblyInfoInputs.cache
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.AssemblyInfo.cs
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.RazorTargetAssemblyInfo.cache
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.dll
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\obj\Debug\netcoreapp2.2\VippsCaseAPI.pdb
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\appsettings.Development.json
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\appsettings.json
+C:\Users\omathi\Documents\Experis\Case Project\VippsCase\Back-end\VippsCaseAPI\VippsCaseAPI\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
