@@ -55,25 +55,27 @@ namespace VippsCaseAPI.Controllers
                 // Adding a new customer if one was not specified in the request
                 User newUser = new User
                 {
-                    Name = value.CustomerDetails.Name,
+                    Name = value.CustomerDetails.FullName,
                     AddressLineOne = value.CustomerDetails.AddressLineOne,
                     AddressLineTwo = value.CustomerDetails.AddressLineTwo,
                     County = value.CustomerDetails.County,
                     PostalCode = value.CustomerDetails.PostalCode,
                     City = value.CustomerDetails.City,
                     Country = value.CustomerDetails.Country,
-                    PhoneNumber = value.CustomerDetails.Phone,
+                    PhoneNumber = value.CustomerDetails.PhoneNumber,
                     Email = value.CustomerDetails.Email
                 };
-                // Storing customer and waiting for the database to assign an id.
+                // Storing our customer details.
                 _context.users.Add(newUser);
-                _context.SaveChanges();
 
                 // Adding the new customer to the charge
                 Order order = _context.orders.Find(1); // Temp value until we get a cart ID from the front-end
                 // Setting the user and charge to the user we just made and the charge token.
                 order.StripeChargeToken = charge.Id;
                 order.User = newUser;
+
+                // Saving all of our changes.
+                _context.SaveChangesAsync();
             }
             catch (StripeException exception)
             {

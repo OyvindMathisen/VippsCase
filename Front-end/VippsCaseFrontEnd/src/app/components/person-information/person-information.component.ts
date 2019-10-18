@@ -30,7 +30,7 @@ export class PersonInformationComponent implements OnInit {
       addressLineOne: new FormControl('', [Validators.required]),
       addressLineTwo: new FormControl(''),
       county: new FormControl('', [Validators.required]),
-      postNumber: new FormControl('', [Validators.required, Validators.pattern('\\d{4}')]),
+      postalCode: new FormControl('', [Validators.required, Validators.pattern('\\d{4}')]),
       city: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
       phoneNumber: new FormControl('', [Validators.required, Validators.pattern('(?:\\d{2} ?){4}|\\d{3} ?\\d{2} ?\\d{3}')]),
@@ -65,8 +65,8 @@ export class PersonInformationComponent implements OnInit {
     return this.personDetails.controls.county;
   }
 
-  getPostNumber() {
-    return this.personDetails.controls.postNumber;
+  getPostalCode() {
+    return this.personDetails.controls.postalCode;
   }
 
   getCity() {

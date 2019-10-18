@@ -35,12 +35,12 @@
   </div>
 
   <div class="form-group">
-    <label for="postNumber">Post Number: </label><br>
-    <input name="postNumber" formControlName="postNumber" type="text" placeholder="0187" required pattern="\d{4}">
+    <label for="postalCode">Postal Code: </label><br>
+    <input name="postalCode" formControlName="postalCode" type="text" placeholder="0187" required pattern="\d{4}">
 
-    <div *ngIf="getPostNumber().invalid && (getPostNumber().dirty || getPostNumber().touched)">
-      <p *ngIf="getPostNumber().errors.required">Post number is required.</p>
-      <p *ngIf="!getPostNumber().errors.requiredPattern">Post number requires 4 digits.</p>
+    <div *ngIf="getPostalCode().invalid && (getPostalCode().dirty || getPostalCode().touched)">
+      <p *ngIf="getPostalCode().errors.required">Postal code is required.</p>
+      <p *ngIf="!getPostalCode().errors.requiredPattern">Postal code requires 4 digits.</p>
     </div>
   </div>
 
