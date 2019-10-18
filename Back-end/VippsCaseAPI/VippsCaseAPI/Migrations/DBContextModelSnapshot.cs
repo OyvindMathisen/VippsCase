@@ -52,7 +52,7 @@ namespace VippsCaseAPI.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<int>("Total");
+                    b.Property<string>("StripeChargeToken");
 
                     b.Property<int>("UserId");
 
@@ -135,19 +135,28 @@ namespace VippsCaseAPI.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<string>("Address")
+                    b.Property<string>("AddressLineOne")
+                        .IsRequired();
+
+                    b.Property<string>("AddressLineTwo");
+
+                    b.Property<string>("City")
+                        .IsRequired();
+
+                    b.Property<string>("County")
                         .IsRequired();
 
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("Firstname")
+                    b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<string>("Lastname")
+                    b.Property<string>("PhoneNumber")
                         .IsRequired();
 
-                    b.Property<string>("PhoneNr");
+                    b.Property<string>("PostalCode")
+                        .IsRequired();
 
                     b.HasKey("UserId");
 

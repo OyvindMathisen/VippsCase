@@ -75,7 +75,7 @@ namespace VippsCaseAPI.Controllers
             try
             {
                 User u = await _context.users.FirstOrDefaultAsync(x => x.Email == email);
-            
+
 
                 Password p = await _context.passwords.FirstOrDefaultAsync(x => x.UserId == u.UserId);
 
@@ -90,7 +90,7 @@ namespace VippsCaseAPI.Controllers
                     return Unauthorized(new LoginDTO("User Validation Failed"));
                 }
             }
-            catch(Exception e)
+            catch (Exception)
             {
                 return Unauthorized("Invalid username or password");
             }
@@ -104,13 +104,16 @@ namespace VippsCaseAPI.Controllers
 
             List<Claim> claims = new List<Claim>
             {
-            new Claim("Email", user.Email),
-            new Claim("Address", user.Address),
-            new Claim("FirstName", user.Firstname),
-            new Claim("LastName", user.Lastname),
-            new Claim("Phone", user.PhoneNr),
-            new Claim("UserId", user.UserId.ToString()),
-            //More custom claims
+                new Claim("Name", user.Name),
+                new Claim("AddressLineOne", user.AddressLineOne),
+                new Claim("AddressLineTwo", user.AddressLineTwo),
+                new Claim("County", user.County),
+                new Claim("PostalCode", user.PostalCode),
+                new Claim("City", user.City),
+                new Claim("PhoneNumber", user.PhoneNumber),
+                new Claim("Email", user.Email),
+                new Claim("UserId", user.UserId.ToString()),
+                //More custom claims
             };
 
             var token = new JwtSecurityToken
@@ -120,7 +123,7 @@ namespace VippsCaseAPI.Controllers
                 expires: DateTime.Now.AddHours(8),
                 signingCredentials: signingCredentials,
                 claims: claims
-            ); 
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using VippsCaseAPI.DataAccess;
+using VippsCaseAPI.Models;
 using VippsCaseAPI.Models.Stripe;
+using Order = VippsCaseAPI.Models.Order;
 
 namespace VippsCaseAPI.Controllers
 {
@@ -37,11 +40,39 @@ namespace VippsCaseAPI.Controllers
 
             try
             {
+                // Try to charge the card for the order
                 Charge charge = service.Create(options);
+                // If we continue from here, it went through successfully!
                 result.Successful = true;
                 result.Data = charge.Id;
 
-                // TODO: Send charge and value.CustomerDetails into our database for further storage.
+                // TODO: If/else check here if the user is signed in or not.
+
+                // TODO: If signed in:
+                    // Code here...
+                // Else, if not signed in...
+
+                // Adding a new customer if one was not specified in the request
+                User newUser = new User
+                {
+                    Name = value.CustomerDetails.Name,
+                    AddressLineOne = value.CustomerDetails.AddressLineOne,
+                    AddressLineTwo = value.CustomerDetails.AddressLineTwo,
+                    County = value.CustomerDetails.County,
+                    PostalCode = value.CustomerDetails.PostalCode,
+                    City = value.CustomerDetails.City,
+                    PhoneNumber = value.CustomerDetails.Phone,
+                    Email = value.CustomerDetails.Email
+                };
+                // Storing customer and waiting for the database to assign an id.
+                _context.users.Add(newUser);
+                _context.SaveChanges();
+
+                // Adding the new customer to the charge
+                Order order = _context.orders.Find(1); // Temp value until we get a cart ID from the front-end
+                // Setting the user and charge to the user we just made and the charge token.
+                order.StripeChargeToken = charge.Id;
+                order.User = newUser;
             }
             catch (StripeException exception)
             {
