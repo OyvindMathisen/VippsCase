@@ -49,8 +49,8 @@
 
   <div class="form-group">
     <span class="required">* </span>
-    <label for="postNumber">Post Number: </label><br>
-    <input name="postNumber" formControlName="postNumber" type="text" placeholder="0187" onfocus="this.placeholder = ''"
+    <label for="postalCode">Postal Code: </label><br>
+    <input name="postalCode" formControlName="postalCode" type="text" placeholder="0187" onfocus="this.placeholder = ''"
       onblur="this.placeholder = '0187'" required pattern="\d{4}">
 
     <div *ngIf="getPostalCode().invalid && (getPostalCode().dirty || getPostalCode().touched)">
@@ -75,8 +75,8 @@
     <label for="country">Country: </label><br>
     <input name="country" formControlName="country" type="text" placeholder="Norway" required>
 
-    <div *ngIf="getCity().invalid && (getCity().dirty || getCity().touched)">
-      <p *ngIf="getCity().errors.required">Country is required.</p>
+    <div *ngIf="getCountry().invalid && (getCountry().dirty || getCountry().touched)">
+      <p *ngIf="getCountry().errors.required">Country is required.</p>
     </div>
   </div>
 
