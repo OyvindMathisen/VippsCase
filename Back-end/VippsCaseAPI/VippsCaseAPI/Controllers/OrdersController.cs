@@ -44,6 +44,37 @@ namespace VippsCaseAPI.Controllers
             return order;
         }
 
+        // GET: api/orders/getOrdersByUserID/4
+        [HttpGet("getOrdersByUserID/{id}")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrdersByUserID(int id)
+        {
+            List<Order> orderList = await _context.orders.Where(x => x.UserId == id && x.Active == true).ToListAsync();
+
+            if (orderList == null)
+            {
+                return NotFound();
+            }
+
+            List<OrderByUserIdDTO> listToReturn = new List<OrderByUserIdDTO>();
+
+            foreach(Order order in orderList)
+            {
+                OrderByUserIdDTO temp = new OrderByUserIdDTO();
+                temp.Order = order;
+                List<OrderItem> orderItemList = await _context.orderItems.Where(x => x.OrderId == order.OrderId).ToListAsync();
+
+                foreach (OrderItem orderItem in orderItemList)
+                {
+                    Item i = await _context.items.FirstOrDefaultAsync(x => x.ItemId == orderItem.ItemId);
+                    temp.Items.Add(i);
+                }
+
+                listToReturn.Add(temp);
+            }
+
+            return Ok(listToReturn);
+        }
+
         // PUT: api/Orders/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)
