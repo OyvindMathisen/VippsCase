@@ -72,8 +72,8 @@ namespace VippsCaseAPI.Controllers
 
             string password = data["password"].ToString();
 
-            try
-            {
+            /*try
+            {*/
                 User u = await _context.users.FirstOrDefaultAsync(x => x.Email == email);
 
 
@@ -89,11 +89,11 @@ namespace VippsCaseAPI.Controllers
                 {
                     return Unauthorized(new LoginDTO("User Validation Failed"));
                 }
-            }
+            /*}
             catch (Exception)
             {
                 return Unauthorized("Invalid username or password");
-            }
+            }*/
         }
 
         private string generateToken(User user)
@@ -106,7 +106,6 @@ namespace VippsCaseAPI.Controllers
             {
                 new Claim("Name", user.Name),
                 new Claim("AddressLineOne", user.AddressLineOne),
-                new Claim("AddressLineTwo", user.AddressLineTwo),
                 new Claim("County", user.County),
                 new Claim("PostalCode", user.PostalCode),
                 new Claim("City", user.City),
@@ -115,6 +114,12 @@ namespace VippsCaseAPI.Controllers
                 new Claim("UserId", user.UserId.ToString()),
                 //More custom claims
             };
+
+            //optionals
+            if (user.AddressLineTwo != null)
+            {
+                claims.Add(new Claim("AddressLineTwo", user.AddressLineTwo));
+            }
 
             var token = new JwtSecurityToken
             (
