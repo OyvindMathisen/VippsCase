@@ -27,8 +27,8 @@ namespace VippsCaseAPI.Models.Stripe
                     return CardError(exception.StripeError.DeclineCode ?? exception.StripeError.Code);
                 case "idempotency_error":
                     // Idempotency errors occur when an Idempotency-Key is re-used on a request that does not match the first request's API endpoint and parameters.
-                    // TODO: Handle duplicate transactions idempotently, sending the customer an "everything went well" with the previous transaction.
-                    return "TODO: Idempotency.";
+                    // NOTE: This is handled already in the StripeController. This is a fallback message.
+                    return "Your transaction seems to already have been handled. Please check your purchase history or contact customer support for further details.";
                 case "invalid_request_error":
                     // Invalid request errors arise when your request has invalid parameters.
                     return "Your request could not be processed at this current time. Please contact customer support for further details.";
@@ -79,10 +79,10 @@ namespace VippsCaseAPI.Models.Stripe
                 case "currency_not_supported":
                     return
                         CardErrorIntro + "Check with your card issuer if your card supports our currency.";
-                // TODO: Handle duplicate transactions idempotently, sending the customer an "everything went well" with the previous transaction.
                 case "duplicate_transaction":
+                    // NOTE: This is handled already in the StripeController. This is a fallback message.
                     return
-                        "";
+                        "A similar transaction has already been handled. Please check your purchase history or contact customer support for further details.";
                 case "expired_card":
                 case "insufficient_funds":
                 case "pin_try_exceeded":

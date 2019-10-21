@@ -49,7 +49,6 @@ namespace VippsCaseAPI.Controllers
                 });
                 // If we continue from here, it went through successfully!
                 result.Successful = true;
-                result.Data = charge.Id;
 
                 // TODO: Check for anonymous user.
                 User user;
@@ -87,8 +86,18 @@ namespace VippsCaseAPI.Controllers
             }
             catch (StripeException exception)
             {
-                result.Successful = false;
-                result.ErrorMessage = _stripeErrorHandler.ErrorHandler(exception);
+                // Idempotency special handling
+                if (exception.StripeError.ErrorType == "idempotency_error"
+                    || exception.StripeError.DeclineCode == "duplicate_transaction"
+                    || exception.StripeError.Code == "duplicate_transaction")
+                {
+                    result.Successful = true;
+                }
+                else
+                {
+                    result.Successful = false;
+                    result.ErrorMessage = _stripeErrorHandler.ErrorHandler(exception);
+                }
             }
 
             return result;

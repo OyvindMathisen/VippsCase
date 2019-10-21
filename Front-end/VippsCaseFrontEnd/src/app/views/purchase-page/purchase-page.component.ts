@@ -87,7 +87,11 @@ export class PurchasePageComponent implements OnInit {
       (data) => {
         console.log(data);
         // Cart to Accepted
-        this.router.navigate(['/confirmation']);
+        if (data.successful) {
+          this.router.navigate(['/confirmation']);
+        } else {
+          // Cart to Declined
+        }
       },
       (error) => {
         console.log(error);
