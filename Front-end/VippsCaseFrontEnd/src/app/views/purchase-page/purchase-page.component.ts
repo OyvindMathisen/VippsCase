@@ -1,16 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { StripeService } from 'src/app/services/stripe.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { StripeCharge } from 'src/app/shared/models/stripe-charge.model';
 import { CartService } from 'src/app/services/cart.service';
+import { StripeCustomer } from 'src/app/shared/models/stripe-customer.model';
 
 @Component({
   selector: 'app-purchase-page',
   templateUrl: './purchase-page.component.html',
   styleUrls: ['./purchase-page.component.scss']
 })
-export class PurchasePageComponent {
+export class PurchasePageComponent implements OnInit {
   // Inputs
   @Input() purchaseDetails: any;
 
@@ -18,7 +19,7 @@ export class PurchasePageComponent {
   stripe: stripe.Stripe;
   cardError: any;
   card: any;
-  items: any; 
+  items: any;
 
   constructor(private stripeService: StripeService, private router: Router, private cartService: CartService) {
     // Stripe Init
@@ -54,7 +55,7 @@ export class PurchasePageComponent {
   createCharge(event: any) {
     // TODO: Replace this with the totalCost from the shoppingCart
     // NOTE: Multiply the sum with 100, as Stripe calculates from the lowest denominator, which is "øre" in nok.
-    //Cart to InProgress
+    // Cart to InProgress
     const cost = 1000 * 100;
 
     this.stripe.createToken(this.card).then((result) => {
@@ -68,23 +69,29 @@ export class PurchasePageComponent {
     });
   }
 
-  stripeTokenHandler(token: string, cost: number, customerData: any) {
+  stripeTokenHandler(token: string, cost: number, customerData: StripeCustomer) {
+    // Obtaining values from our localStorage
+    const userId = parseInt(localStorage.getItem('user_id'), 10);
+    const cartId = parseInt(localStorage.getItem('order_id'), 10);
+
     // Generates the charge object, adding the values and handing the response.
     const charge = {} as StripeCharge;
     charge.stripeToken = token;
     charge.totalCost = cost;
+    charge.userId = isNaN(userId) ? -1 : userId;
+    charge.cartId = isNaN(cartId) ? -1 : cartId;
     charge.customerDetails = customerData;
 
     // Redirects the user to the confirmation page if everything went as expected.
     this.stripeService.addCharge(charge).subscribe(
       (data) => {
         console.log(data);
-        //Cart to Accepted
+        // Cart to Accepted
         this.router.navigate(['/confirmation']);
       },
       (error) => {
         console.log(error);
-        //Cart to Declined
+        // Cart to Declined
       }
     );
   }

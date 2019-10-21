@@ -10,7 +10,7 @@ export class CartService {
 
   constructor(private http: HttpClient) { }
 
-  getItems(){
+  getItems() {
     const token = localStorage.getItem('id_token');
     const headerDict = {
       'Content-Type': 'application/json',
@@ -26,23 +26,22 @@ export class CartService {
     return this.http.get(environment.baseApi + 'api/items', requestOptions);
   }
 
-  getItem(){
+  getItem() {
     const token = localStorage.getItem('id_token');
     const headerDict = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Access-Control-Allow-Headers': 'Content-Type',
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     }
-    
-    const requestOptions = {                                                                                                                                                                                 
-      headers: new HttpHeaders(headerDict), 
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
     };
-    
-    return this.http.get("https://vippscaseapi20191011124052.azurewebsites.net/api/items/1", requestOptions);
+
+    return this.http.get(environment.baseApi + 'api/items/', requestOptions);
   }
 
-  newCart(userId: number): Observable<any>{
+  newCart(userId: number): Observable<any> {
     const token = localStorage.getItem('id_token');
 
     return this.http.post(environment.baseApi + 'api/orders/newCart', {userId},
