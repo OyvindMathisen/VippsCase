@@ -11,4 +11,11 @@
             max-width: 75%;
         }
     }
+
+    .scrollDiv {
+        margin-top: 45px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 800px;
+    }
 }
