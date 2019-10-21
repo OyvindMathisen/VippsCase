@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  stripeKey: 'pk_test_IHKCM3CTES4VMOFNa07X685b00z1e1ZBXP'
+  stripeKey: 'pk_test_IHKCM3CTES4VMOFNa07X685b00z1e1ZBXP',
+  baseApi: 'https://vippscaseapi20191011124052.azurewebsites.net/'
 };
 
 /*

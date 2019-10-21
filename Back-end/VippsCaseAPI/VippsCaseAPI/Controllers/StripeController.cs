@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using VippsCaseAPI.DataAccess;
@@ -23,16 +24,15 @@ namespace VippsCaseAPI.Controllers
 
         [HttpPost]
         [Route("charge")]
-        public ActionResult<StripeResult> Post([FromBody] StripeCharge value)
+        public async Task<ActionResult<StripeResult>> Post([FromBody] StripeCharge value)
         {
             StripeConfiguration.ApiKey = StripeApiKey;
             ChargeCreateOptions options = new ChargeCreateOptions
             {
                 Amount = value.TotalCost,
                 Currency = "nok",
-                // TODO: Update description to be more descriptive.
-                Description = "Test charge.",
-                Source = value.StripeToken,
+                Description = "Purchase from VippsCase.",
+                Source = value.StripeToken
             };
 
             StripeResult result = new StripeResult();
@@ -40,42 +40,50 @@ namespace VippsCaseAPI.Controllers
 
             try
             {
+                Order order = _context.orders.Find(value.CartId);
+
                 // Try to charge the card for the order
-                Charge charge = service.Create(options);
+                Charge charge = service.Create(options, new RequestOptions
+                {
+                    IdempotencyKey = order.IdempotencyToken
+                });
                 // If we continue from here, it went through successfully!
                 result.Successful = true;
                 result.Data = charge.Id;
 
-                // TODO: If/else check here if the user is signed in or not.
-
-                // TODO: If signed in:
-                    // Code here...
-                // Else, if not signed in...
-
-                // Adding a new customer if one was not specified in the request
-                User newUser = new User
+                // TODO: Check for anonymous user.
+                User user;
+                if (true)
                 {
-                    Name = value.CustomerDetails.FullName,
-                    AddressLineOne = value.CustomerDetails.AddressLineOne,
-                    AddressLineTwo = value.CustomerDetails.AddressLineTwo,
-                    County = value.CustomerDetails.County,
-                    PostalCode = value.CustomerDetails.PostalCode,
-                    City = value.CustomerDetails.City,
-                    Country = value.CustomerDetails.Country,
-                    PhoneNumber = value.CustomerDetails.PhoneNumber,
-                    Email = value.CustomerDetails.Email
-                };
-                // Storing our customer details.
-                _context.users.Add(newUser);
+                    // Adding a new customer if one was not specified in the request
+                    user = new User
+                    {
+                        Name = value.CustomerDetails.FullName,
+                        AddressLineOne = value.CustomerDetails.AddressLineOne,
+                        AddressLineTwo = value.CustomerDetails.AddressLineTwo,
+                        County = value.CustomerDetails.County,
+                        PostalCode = value.CustomerDetails.PostalCode,
+                        City = value.CustomerDetails.City,
+                        Country = value.CustomerDetails.Country,
+                        PhoneNumber = value.CustomerDetails.PhoneNumber,
+                        Email = value.CustomerDetails.Email
+                    };
 
-                // Adding the new customer to the charge
-                Order order = _context.orders.Find(1); // Temp value until we get a cart ID from the front-end
+                    // Storing our customer details.
+                    _context.users.Add(user);
+                }
+                else
+                {
+                    // Find the user matching the userId and add them to the order.
+                    user = _context.users.Find(value.UserId);
+                }
+
                 // Setting the user and charge to the user we just made and the charge token.
                 order.StripeChargeToken = charge.Id;
-                order.User = newUser;
+                order.UserId = user.UserId;
 
                 // Saving all of our changes.
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
             catch (StripeException exception)
             {

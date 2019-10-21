@@ -118,6 +118,8 @@ namespace VippsCaseAPI.Controllers
 
             //TODO: Use last here? possible problem with multiple requests at once
             Order o2 = await _context.orders.LastAsync();
+            // Generate an idempotency token to ensure our requests are only handled once, in case of connection issues, etc.
+            o2.IdempotencyToken = Guid.NewGuid().ToString();
 
             Random rand = new Random();
 

@@ -36,7 +36,8 @@ namespace VippsCaseAPI.Models
         [ForeignKey("FK_Order_UserId")]
         [Required]
         public int UserId { get; set; }
-        public User User { get; set; }
+        public User User { get; set; } // TODO: Remove this value during clean-up
         public string StripeChargeToken { get; set; }
+        public string IdempotencyToken { get; set; }
     }
 }
