@@ -110,10 +110,10 @@
   <div class="paymentDetails">
     <app-stripe-card-input [card]="card" (cardInitialized)="stripeCardInited($event)"></app-stripe-card-input>
   </div>
-
+  <br/>
   <div class="submit">
     <!-- Button is disabled until all of the required fields (except stripe) has been filled in. -->
     <button (click)="onPurchaseClicked()" [disabled]="personDetails.invalid"
-      class="btn btn-success btn-block">Purchase</button>
+      class="btn btn-success btn-block" style="width: 360px">Purchase</button>
   </div>
 </form>
