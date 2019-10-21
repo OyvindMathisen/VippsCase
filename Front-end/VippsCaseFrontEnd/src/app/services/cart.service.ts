@@ -58,4 +58,22 @@ export class CartService {
         error => error
     );
   }
+
+  changeOrderStatus(orderId: number, status: number): Observable<any>{
+    const token = localStorage.getItem('id_token');
+
+    return this.http.post(environment.baseApi + 'api/orders/changeOrderStatus', {OrderId: orderId, Status:status},
+    {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        Authorization: `Bearer ${token}`
+          }),
+      responseType: 'text'
+    }).pipe(
+        data => data,
+        error => error
+    );
+  }
 }
