@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,29 +14,29 @@ export class CartService {
     const token = localStorage.getItem('id_token');
     const headerDict = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Access-Control-Allow-Headers': 'Content-Type',
-      'Authorization': `Bearer ${token}`
-    }
-    
-    const requestOptions = {                                                                                                                                                                                 
-      headers: new HttpHeaders(headerDict), 
+      Authorization: `Bearer ${token}`
     };
-    
-    return this.http.get("https://vippscaseapi20191011124052.azurewebsites.net/api/items", requestOptions);
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+
+    return this.http.get(environment.baseApi + 'api/items', requestOptions);
   }
 
   newCart(userId: number): Observable<any>{
     const token = localStorage.getItem('id_token');
 
-    return this.http.post("https://vippscaseapi20191011124052.azurewebsites.net/api/orders/newCart", {userId: userId}, 
+    return this.http.post(environment.baseApi + 'api/orders/newCart', {userId},
     {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Access-Control-Allow-Headers': 'Content-Type',
-        'Authorization': `Bearer ${token}`
-          }), 
+        Authorization: `Bearer ${token}`
+          }),
       responseType: 'json'
     }).pipe(
         data => data,
