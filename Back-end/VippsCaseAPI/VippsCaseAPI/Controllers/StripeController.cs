@@ -30,9 +30,8 @@ namespace VippsCaseAPI.Controllers
             {
                 Amount = value.TotalCost,
                 Currency = "nok",
-                // TODO: Update description to be more descriptive.
-                Description = "Test charge.",
-                Source = value.StripeToken,
+                Description = "Purchase from VippsCase.",
+                Source = value.StripeToken
             };
 
             StripeResult result = new StripeResult();
@@ -41,7 +40,10 @@ namespace VippsCaseAPI.Controllers
             try
             {
                 // Try to charge the card for the order
-                Charge charge = service.Create(options);
+                Charge charge = service.Create(options, new RequestOptions
+                {
+                    IdempotencyKey = value.IdempotencyToken
+                });
                 // If we continue from here, it went through successfully!
                 result.Successful = true;
                 result.Data = charge.Id;
