@@ -46,14 +46,14 @@ export class OrderListComponent implements OnInit {
                 {
                     "itemId": 1,
                     "name": "Spoon",
-                    "imageUrl": "spoon.jpg",
+                    "imageUrl": "https://lenox.scene7.com/is/image/Lenox/silver-echo-place-spoon__4480015_wHR?$PDPwithZoom$",
                     "price": 10,
                     "active": false
                 },
                 {
                     "itemId": 1,
                     "name": "Spoon",
-                    "imageUrl": "spoon.jpg",
+                    "imageUrl": "https://lenox.scene7.com/is/image/Lenox/silver-echo-place-spoon__4480015_wHR?$PDPwithZoom$",
                     "price": 10,
                     "active": false
                 },
