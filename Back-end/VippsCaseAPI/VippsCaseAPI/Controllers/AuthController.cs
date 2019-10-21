@@ -72,8 +72,8 @@ namespace VippsCaseAPI.Controllers
 
             string password = data["password"].ToString();
 
-            /*try
-            {*/
+            try
+            {
                 User u = await _context.users.FirstOrDefaultAsync(x => x.Email == email);
 
 
@@ -89,11 +89,11 @@ namespace VippsCaseAPI.Controllers
                 {
                     return Unauthorized(new LoginDTO("User Validation Failed"));
                 }
-            /*}
+            }
             catch (Exception)
             {
                 return Unauthorized("Invalid username or password");
-            }*/
+            }
         }
 
         private string generateToken(User user)

@@ -144,6 +144,20 @@ namespace VippsCaseAPI.Controllers
             return Ok(cartToReturn);
         }
 
+        [HttpPost("changeOrderStatus")]
+        public async Task<ActionResult> ChangeOrderStatus([FromBody]ChangeOrderStatusDTO cos)
+        {
+            Order o = await _context.orders.FirstOrDefaultAsync(x => x.OrderId == cos.OrderId);
+
+            o.Status = (Statuses)cos.Status;
+
+            _context.Entry(o).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
         // POST: api/Orders
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder([FromBody]JObject data)
