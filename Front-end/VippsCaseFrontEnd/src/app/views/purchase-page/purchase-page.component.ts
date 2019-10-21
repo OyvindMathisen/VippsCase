@@ -54,6 +54,7 @@ export class PurchasePageComponent {
   createCharge(event: any) {
     // TODO: Replace this with the totalCost from the shoppingCart
     // NOTE: Multiply the sum with 100, as Stripe calculates from the lowest denominator, which is "øre" in nok.
+    //Cart to InProgress
     const cost = 1000 * 100;
 
     this.stripe.createToken(this.card).then((result) => {
@@ -78,13 +79,12 @@ export class PurchasePageComponent {
     this.stripeService.addCharge(charge).subscribe(
       (data) => {
         console.log(data);
-
-        if (data.successful) {
-          this.router.navigate(['/confirmation']);
-        }
+        //Cart to Accepted
+        this.router.navigate(['/confirmation']);
       },
       (error) => {
         console.log(error);
+        //Cart to Declined
       }
     );
   }

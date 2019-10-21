@@ -6,7 +6,7 @@
       <app-person-information [card]="card" [stripe]="stripe" (confirmPurchaseDetails)="createCharge($event)"
         (cardInitialized)="storeCard($event)"></app-person-information>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 scrollDiv">
       <div class="itemBasket">
         <!-- Specify the displayType class from the item-list.component.scss file here -->
         <app-item-list [displayType]="'purchaseItems'" [items] = "items"></app-item-list>

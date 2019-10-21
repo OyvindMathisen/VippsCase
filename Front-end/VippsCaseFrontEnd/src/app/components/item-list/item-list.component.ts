@@ -15,15 +15,10 @@ export class ItemListComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.items) {
-      this.items = [];
-    }
-  }
-
-  getCart(){
-    // Get new cart:
-    // this.cartService.newCart(parseInt(localStorage.getItem('user_id'), 10)).subscribe((data) => {
-    //   console.log(data);
+    this.items = [];
+    // Get items here.
+    // this.cartService.getItem().subscribe((data) => {
+    //   this.items = data;
     // });
   }
 
