@@ -53,7 +53,7 @@ namespace VippsCaseAPI.Controllers
 
                 // TODO: Check for anonymous user.
                 User user;
-                if (true)
+                if (value.UserId == -1)
                 {
                     // Adding a new customer if one was not specified in the request
                     user = new User
