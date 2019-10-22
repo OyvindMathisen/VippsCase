@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
@@ -95,6 +96,12 @@ namespace VippsCaseAPI.Controllers
                 }
                 else
                 {
+                    // When an order fails due to an issue with stripe, we'll assign the order a new idempotency key to prevent the "idempotency_error" from stripe.
+                    Order order = _context.orders.Find(value.CartId);
+                    order.IdempotencyToken = Guid.NewGuid().ToString();
+                    await _context.SaveChangesAsync();
+
+                    // Return the error message to the user.
                     result.Successful = false;
                     result.ErrorMessage = _stripeErrorHandler.ErrorHandler(exception);
                 }
