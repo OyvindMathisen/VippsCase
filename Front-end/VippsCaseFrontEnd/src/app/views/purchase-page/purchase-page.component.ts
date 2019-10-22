@@ -17,6 +17,7 @@ export class PurchasePageComponent implements OnInit {
 
   // Local Variables
   stripe: stripe.Stripe;
+  stripeError: string;
   cardError: any;
   card: any;
   items: any;
@@ -61,6 +62,9 @@ export class PurchasePageComponent implements OnInit {
       console.log('Cart to "InProgress"' + data);
     });
 
+    // Resetting the error message from stripe-backend
+    this.stripeError = '';
+
     const cost = 1000 * 100;
 
     this.stripe.createToken(this.card).then((result) => {
@@ -99,13 +103,14 @@ export class PurchasePageComponent implements OnInit {
         } else {
           // Cart to Declined
           this.cartService.changeOrderStatus(order, 2).subscribe();
+          this.stripeError = data.errorMessage;
         }
-        this.cartService.changeOrderStatus(order, 1).subscribe();
       },
       (error) => {
-        console.log(error);
+        console.error(error);
         // Cart to Declined
         this.cartService.changeOrderStatus(order, 0).subscribe();
+        this.stripeError = error.message;
       }
     );
   }

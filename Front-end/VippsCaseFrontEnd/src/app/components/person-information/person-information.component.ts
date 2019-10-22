@@ -10,6 +10,7 @@ export class PersonInformationComponent implements OnInit {
   // Inputs
   @Input() card: any;
   @Input() stripe: stripe.Stripe;
+  @Input() stripeError: string;
 
   // Outputs
   @Output() confirmPurchaseDetails: EventEmitter<any>;
