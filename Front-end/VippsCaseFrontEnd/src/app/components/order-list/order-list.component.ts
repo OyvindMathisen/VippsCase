@@ -15,8 +15,13 @@ export class OrderListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cartService.getOrdersByUserId(23).subscribe((data) => {
-        this.orders = data;
+    if(!this.orders){
+      this.orders = [];
+    }
+    this.cartService.getOrdersByUserId(28).subscribe((data) => {
+      // Orders are sorted by newest first by themselves
+      console.log(data);
+      this.orders = data;
     })
   }
 

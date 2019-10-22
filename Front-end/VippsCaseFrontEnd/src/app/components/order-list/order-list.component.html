@@ -1,7 +1,11 @@
-<div *ngIf = "orders.length < 1">
+<div *ngIf="orders.length < 1">
     <p>No order history yet</p>
 </div>
 
-<div *ngFor = "let order of orders">
-    <app-item-list [items] = "order.items"></app-item-list>
+<div *ngFor="let order of orders">
+    <!-- TODO: Make seperator between each order look better
+    It's a bit ugly right now -->
+    <hr id="tableLine">
+    <h5>{{ order.order.createdAt | date:'medium' }}</h5>
+    <app-item-list [items]="order.items"></app-item-list>
 </div>
