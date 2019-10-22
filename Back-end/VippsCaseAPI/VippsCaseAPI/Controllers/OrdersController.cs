@@ -236,17 +236,11 @@ namespace VippsCaseAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
-            return NoContent();
+            genericResponseDTO.Message = "Active id was successfully changed";
+            return Ok(genericResponseDTO);
         }
 
         private bool OrderExists(int id)
