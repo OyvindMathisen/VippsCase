@@ -117,9 +117,9 @@ namespace VippsCaseAPI.Controllers
             await _context.SaveChangesAsync();
 
             //TODO: Use last here? possible problem with multiple requests at once
-            Order o2 = await _context.orders.LastAsync();
+            //Order o2 = await _context.orders.LastAsync();
             // Generate an idempotency token to ensure our requests are only handled once, in case of connection issues, etc.
-            o2.IdempotencyToken = Guid.NewGuid().ToString();
+            o.IdempotencyToken = Guid.NewGuid().ToString();
 
             Random rand = new Random();
 
@@ -133,13 +133,13 @@ namespace VippsCaseAPI.Controllers
                 Random rdm = new Random();
                 int index = rdm.Next(items.Count());
                 cart.Add(items[index]);
-                OrderItem tempOrderItem = new OrderItem(o2.OrderId, items[index].ItemId);
+                OrderItem tempOrderItem = new OrderItem(o.OrderId, items[index].ItemId);
                 _context.orderItems.Add(tempOrderItem);
             }
 
             await _context.SaveChangesAsync();
 
-            CartDTO cartToReturn = new CartDTO(o2.OrderId, cart);
+            CartDTO cartToReturn = new CartDTO(o.OrderId, cart);
 
             return Ok(cartToReturn);
         }
