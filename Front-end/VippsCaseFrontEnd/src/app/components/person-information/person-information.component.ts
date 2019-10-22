@@ -11,6 +11,7 @@ export class PersonInformationComponent implements OnInit {
   @Input() card: any;
   @Input() stripe: stripe.Stripe;
   @Input() stripeError: string;
+  @Input() disablePurchaseButton: boolean;
 
   // Outputs
   @Output() confirmPurchaseDetails: EventEmitter<any>;
@@ -41,6 +42,7 @@ export class PersonInformationComponent implements OnInit {
 
   onPurchaseClicked() {
     // Purchase is validated and ready to be processed!
+    this.disablePurchaseButton = true;
     this.confirmPurchaseDetails.emit(this.personDetails.value);
   }
 
