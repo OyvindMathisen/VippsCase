@@ -16,7 +16,6 @@ export class ItemListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.items = [];
   }
 
   getCart() {
