@@ -21,6 +21,7 @@ export class PurchasePageComponent implements OnInit {
   cardError: any;
   card: any;
   items: any;
+  disablePurchaseButton: boolean;
 
   constructor(private stripeService: StripeService, private router: Router, private cartService: CartService) {
     // Stripe Init
@@ -54,9 +55,6 @@ export class PurchasePageComponent implements OnInit {
   }
 
   createCharge(event: any) {
-    // TODO: Replace this with the totalCost from the shoppingCart
-    // NOTE: Multiply the sum with 100, as Stripe calculates from the lowest denominator, which is "øre" in nok.
-
     // Cart to InProgress
     this.cartService.changeOrderStatus(parseInt(localStorage.getItem('order_id'), 10), 0).subscribe((data) => {
       console.log('Cart to "InProgress"' + data);
@@ -65,12 +63,15 @@ export class PurchasePageComponent implements OnInit {
     // Resetting the error message from stripe-backend
     this.stripeError = '';
 
+    // TODO: Replace this with the totalCost from the shoppingCart
+    // NOTE: Multiply the sum with 100, as Stripe calculates from the lowest denominator, which is "øre" in nok.
     const cost = 1000 * 100;
 
     this.stripe.createToken(this.card).then((result) => {
       if (result.error) {
         // Inform the user if there was an error
         this.cardError.textContent = result.error.message;
+        this.disablePurchaseButton = false;
       } else {
         // Send the token to the server
         this.stripeTokenHandler(result.token.id, cost, event);
@@ -113,6 +114,8 @@ export class PurchasePageComponent implements OnInit {
         this.stripeError = error.message;
       }
     );
+
+    this.disablePurchaseButton = false;
   }
 
   // Received from the stripe-card-element after initialization for us to handle error messages

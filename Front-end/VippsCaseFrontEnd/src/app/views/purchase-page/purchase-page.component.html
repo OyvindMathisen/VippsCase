@@ -3,8 +3,9 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6">
-      <app-person-information [card]="card" [stripe]="stripe" [stripeError]="stripeError" (confirmPurchaseDetails)="createCharge($event)"
-        (cardInitialized)="storeCard($event)"></app-person-information>
+      <app-person-information [card]="card" [stripe]="stripe" [stripeError]="stripeError" [disablePurchaseButton]="disablePurchaseButton"
+      (confirmPurchaseDetails)="createCharge($event)" (cardInitialized)="storeCard($event)">
+      </app-person-information>
     </div>
     <div class="col-sm-6 scrollDiv" id="style-2">
       <div class="itemBasket">

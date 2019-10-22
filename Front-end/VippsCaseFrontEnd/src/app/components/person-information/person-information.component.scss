@@ -28,3 +28,54 @@ p {
 .required{
     color: red;
 }
+
+/* Loading animation */
+/* Based off: https://icons8.com/cssload/ - fountainG */
+#loader {
+    position: relative;
+    width: 80px;
+    height: 28px;
+    margin: auto;
+}
+
+.loader {
+    position: absolute;
+    top: 6.5px;
+    background-color: #28a745;
+    width: 15px;
+    height: 15px;
+    animation-name: bounce_loader;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    transform: scale(.3);
+    border-radius: 19px;
+}
+
+#loader_1 {
+    left: 0;
+    animation-delay: 0.5s;
+}
+
+#loader_2 {
+    left: 30px;
+    animation-delay: 0.75s;
+}
+
+#loader_3 {
+    left: 60px;
+    animation-delay: 1s;
+}
+
+@keyframes bounce_loader {
+    0% {
+        transform:scale(1);
+        background-color: #363636;
+    }
+    100% {
+        transform: scale(0.3);
+        background-color: #28a745;
+    }
+}
+
+/* Loading animation end */
