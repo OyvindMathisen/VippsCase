@@ -125,7 +125,7 @@ namespace VippsCaseAPI.Controllers
 
             int itemAmount = rand.Next(5);
 
-            List<Item> items = await _context.items.ToListAsync();
+            List<Item> items = await _context.items.Where(x => x.Active == true).ToListAsync();
             List<Item> cart = new List<Item>();
 
             for (int i = 0; i < itemAmount; i++)
