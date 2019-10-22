@@ -3,7 +3,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-6">
-      <app-person-information [card]="card" [stripe]="stripe" (confirmPurchaseDetails)="createCharge($event)"
+      <app-person-information [card]="card" [stripe]="stripe" [stripeError]="stripeError" (confirmPurchaseDetails)="createCharge($event)"
         (cardInitialized)="storeCard($event)"></app-person-information>
     </div>
     <div class="col-sm-6 scrollDiv" id="style-2">

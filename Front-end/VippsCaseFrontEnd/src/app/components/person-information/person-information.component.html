@@ -110,6 +110,9 @@
   <div class="paymentDetails">
     <app-stripe-card-input [card]="card" (cardInitialized)="stripeCardInited($event)"></app-stripe-card-input>
   </div>
+  <div *ngIf="stripeError != ''"class="stripeBackendError">
+    <p>{{ stripeError }}</p>
+  </div>
   <br/>
   <div class="submit">
     <!-- Button is disabled until all of the required fields (except stripe) has been filled in. -->
