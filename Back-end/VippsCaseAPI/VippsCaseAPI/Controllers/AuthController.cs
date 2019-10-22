@@ -112,6 +112,7 @@ namespace VippsCaseAPI.Controllers
                 new Claim("PhoneNumber", user.PhoneNumber),
                 new Claim("Email", user.Email),
                 new Claim("UserId", user.UserId.ToString()),
+                new Claim("Country", user.Country),
                 //More custom claims
             };
 
