@@ -45,6 +45,7 @@ export class PersonInformationComponent implements OnInit {
       console.log(atob(token.split('.')[1]));
       const userInfo: any = JSON.parse(atob(token.split('.')[1]));
       
+      //Set values of person-information form
       this.personDetails.controls.fullName.setValue(userInfo.Name);
       this.personDetails.controls.addressLineOne.setValue(userInfo.AddressLineOne);
       this.personDetails.controls.addressLineTwo.setValue(userInfo.AddressLineTwo);
