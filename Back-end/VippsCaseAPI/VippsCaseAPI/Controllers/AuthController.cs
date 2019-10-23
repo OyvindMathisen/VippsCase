@@ -89,7 +89,7 @@ namespace VippsCaseAPI.Controllers
                     {
                         return Ok(new LoginDTO(generateToken(u), "User Validated"));
                     }
-                    else if(role == "anonymous")
+                    else
                     {
                         return Ok(new LoginDTO(generateAnonymousToken(), "User Validated"));
                     }
