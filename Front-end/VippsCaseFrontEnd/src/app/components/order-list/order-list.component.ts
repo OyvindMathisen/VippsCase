@@ -18,7 +18,7 @@ export class OrderListComponent implements OnInit {
     if(!this.orders){
       this.orders = [];
     }
-    this.cartService.getOrdersByUserId(28).subscribe((data) => {
+    this.cartService.getOrdersByUserId(parseInt(localStorage.getItem('user_id'))).subscribe((data) => {
       // Orders are sorted by newest first by themselves
       this.orders = data;
     })
