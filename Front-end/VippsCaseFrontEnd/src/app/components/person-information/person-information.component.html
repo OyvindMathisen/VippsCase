@@ -119,12 +119,6 @@
     </div>
   </div>
 
-  <div *ngIf="stripeError != ''"class="stripeBackendError">
-    <p>{{ stripeError }}</p>
-  </div>
-
-  <br/>
-
   <div class="submit">
     <!-- Button is disabled until all of the required fields (except stripe) has been filled in. -->
     <button (click)="onPurchaseClicked()" [disabled]="personDetails.invalid || disablePurchaseButton"
@@ -135,10 +129,14 @@
         <div id="loader_2" class="loader"></div>
         <div id="loader_3" class="loader"></div>
       </div>
-      
+
       <ng-template #canMakePurchase>
         Purchase
       </ng-template>
     </button>
+  </div>
+
+  <div *ngIf="stripeError != ''"class="stripeBackendError">
+    {{ stripeError }}
   </div>
 </form>

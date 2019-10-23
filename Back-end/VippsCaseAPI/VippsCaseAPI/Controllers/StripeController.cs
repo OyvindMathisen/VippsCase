@@ -159,6 +159,27 @@ namespace VippsCaseAPI.Controllers
             return result;
         }
 
+        [HttpPost("charge-failed")]
+        public async Task<ActionResult<StripeResult>> PostError([FromBody] StripeCharge request)
+        {
+            StripeResult result = new StripeResult();
+            Order order = _context.orders.Find(request.CartId);
+            try
+            {
+                order.IdempotencyToken = Guid.NewGuid().ToString();
+                await _context.SaveChangesAsync();
+
+                result.Success = true;
+            }
+            catch (Exception exception)
+            {
+                result.Success = false;
+                result.Error = exception.Message;
+            }
+
+            return result;
+        }
+
         [HttpGet("get-charge")]
         public ActionResult<StripeResult> Get([FromBody] StripeChargeRequest request)
         {
