@@ -119,7 +119,8 @@ namespace VippsCaseAPI.Controllers
                 issuer: "admin",
                 audience: "user",
                 expires: DateTime.Now.AddHours(8),
-                signingCredentials: signingCredentials
+                signingCredentials: signingCredentials,
+                claims: claims
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
