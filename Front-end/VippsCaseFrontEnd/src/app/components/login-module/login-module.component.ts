@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { LoginService } from "../../services/login.service";
 import { Login } from "../../shared/models/login.model";
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 //import * as moment from "moment";
 
 
@@ -21,22 +22,46 @@ export class LoginModuleComponent implements OnInit {
   login = {} as Login;
   loginError = false; 
 
-  constructor(private http: HttpClient,
+  //cookie vars
+  event: boolean; 
+  username: any;
+  password: any;
+  cookieValueUsername: any;
+  cookieValuePassword: any;
+
+  constructor(private cookie: CookieService,
+    private http: HttpClient,
     private loginService: LoginService,
     private router: Router) { }
 
   ngOnInit() {
+    // this.username = document.getElementById('username');
+    // this.password = document.getElementById('password');
+    
+    this.username = this.cookie.get('username');
+    this.password = this.cookie.get('password');
   }
 
-  loginClicked(email, pwd){
-    console.log(email);
-    console.log(pwd);
+  onRememberMe(event) {
+    this.event = event.target.checked;
+  }
+
+  loginClicked(email, pwd, role){
+    console.log("Login method called...");
+    this.cookieValueUsername = this.cookie.get('username');
+    this.cookieValuePassword = this.cookie.get('password');
     
+    if(this.event) {
+      //set cookies
+      this.cookie.set("username", email, 1);
+      this.cookie.set("password", pwd, 1);
+    }
+
     this.login = {
       email: email,
-      password: pwd
+      password: pwd,
+      role: role
     }
-    
     
     this.loginService.login(this.login).subscribe(
       data => {

@@ -358,3 +358,9 @@ Back-end/VippsCaseAPI/VippsCaseAPI/obj/Debug/netcoreapp2.2/VippsCaseAPI.dll
 Back-end/VippsCaseAPI/VippsCaseAPI/obj/Debug/netcoreapp2.2/VippsCaseAPI.RazorAssemblyInfo.cache
 
 Back-end/VippsCaseAPI/VippsCaseAPI/obj/Debug/netcoreapp2.2/VippsCaseAPI.RazorAssemblyInfo.cs
+
+Back-end/VippsCaseAPI/VippsCaseAPI/bin/Debug/netcoreapp2.2/VippsCaseAPI.runtimeconfig.dev.json
+
+Back-end/VippsCaseAPI/.vs/VippsCaseAPI/config/applicationhost.config
+
+*.cache

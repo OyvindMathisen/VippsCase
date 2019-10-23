@@ -1,5 +1,9 @@
+import { StripeCustomer } from './stripe-customer.model';
+
 export interface StripeCharge {
     stripeToken: string;
     totalCost: number;
-    customerDetails: any;
+    userId: number;
+    cartId: number;
+    customerDetails: StripeCustomer;
 }

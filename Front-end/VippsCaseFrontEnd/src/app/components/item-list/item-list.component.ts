@@ -10,26 +10,15 @@ export class ItemListComponent implements OnInit {
 
   // @Input() anyClassNameYouWant: string = 'any text or no text';
   @Input() displayType = '';
+  @Input() items: any;
 
-  items: any;
-
-  constructor(
-    // Init the service here
-    private cartService: CartService
-  ) { }
-
-  ngOnInit() {
-    // Get items here.
-    this.cartService.getItem().subscribe((data) => {
-      this.items = data;
-    });
+  constructor(private cartService: CartService) {
   }
 
-  getCart(){
-    // Get new cart:
-    this.cartService.newCart(parseInt(localStorage.getItem('user_id'), 10)).subscribe((data) => {
-      console.log(data);
-    });
+  ngOnInit() {
+    if(!this.items){
+      this.items = [];
+    }
   }
 
 }

@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './views/login-form/login-form.component';
 import { PurchasePageComponent } from './views/purchase-page/purchase-page.component';
@@ -20,6 +20,13 @@ import { StripeCardInputComponent } from './components/stripe-card-input/stripe-
 import { ErrorComponent } from './components/error/error.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { PersonInformationComponent } from './components/person-information/person-information.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+
+import { CookieService } from 'ngx-cookie-service';
+import { RoleGuardService } from './services/role-guard.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +45,8 @@ import { PersonInformationComponent } from './components/person-information/pers
     ProfileDetailsComponent,
     ErrorComponent,
     PageNotFoundComponent,
-    PersonInformationComponent
+    PersonInformationComponent,
+    OrderListComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +55,14 @@ import { PersonInformationComponent } from './components/person-information/pers
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    CookieService,
+    AuthService,
+    AuthGuardService,
+    RoleGuardService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

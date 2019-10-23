@@ -21,14 +21,11 @@ namespace VippsCaseAPI.Models
         {
             Active = true;
             CreatedAt = DateTime.Now;
-            Total = 0;
             Status = Statuses.Cart;
         }
 
         [Key]
         public int OrderId { get; set; }
-        [Required]
-        public int Total { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; }
         [Required]
@@ -39,6 +36,8 @@ namespace VippsCaseAPI.Models
         [ForeignKey("FK_Order_UserId")]
         [Required]
         public int UserId { get; set; }
-        public User User { get; set; }
+        public User User { get; set; } // TODO: Remove this value during clean-up
+        public string StripeChargeToken { get; set; }
+        public string IdempotencyToken { get; set; }
     }
 }

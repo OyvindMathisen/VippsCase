@@ -32,27 +32,33 @@ namespace VippsCaseAPI.Controllers
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public async Task<ActionResult> GetOrder(int id)
         {
+            GenericResponseDTO genericResponseDTO = new GenericResponseDTO();
+
             var order = await _context.orders.FindAsync(id);
 
             if (order == null)
             {
-                return NotFound();
+                genericResponseDTO.Message = "There is no order with the given identifier";
+                return NotFound(genericResponseDTO);
             }
 
-            return order;
+            return Ok(order);
         }
 
         // GET: api/orders/getOrdersByUserID/4
         [HttpGet("getOrdersByUserID/{id}")]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrdersByUserID(int id)
+        public async Task<ActionResult> GetOrdersByUserID(int id)
         {
+            GenericResponseDTO genericResponseDTO = new GenericResponseDTO();
+
             List<Order> orderList = await _context.orders.Where(x => x.UserId == id && x.Active == true).ToListAsync();
 
-            if (orderList == null)
+            if (orderList.Count < 1)
             {
-                return NotFound();
+                genericResponseDTO.Message = "The user does not currenty have any registered orders.";
+                return NotFound(genericResponseDTO);
             }
 
             List<OrderByUserIdDTO> listToReturn = new List<OrderByUserIdDTO>();
@@ -106,24 +112,44 @@ namespace VippsCaseAPI.Controllers
         }
 
         [HttpPost("newCart")]
-        public async Task<ActionResult> PostNewCart([FromBody]JObject data)
+        public async Task<ActionResult> PostNewCart([FromBody]UserIdDTO u)
         {
             //TODO: Seperation of concern
             //TODO: Exception handling
             Order o = new Order();
-            o.UserId = data["userId"].ToObject<int>();
+            GenericResponseDTO genericResponseDTO = new GenericResponseDTO();
+
+            //Check if user exists
+            if (u.UserId != 0)
+            {
+                try
+                {
+                    await _context.users.FirstAsync(x => x.UserId == u.UserId);
+                }
+                catch
+                {
+                    genericResponseDTO.Message = "No user with that ID found";
+                    return NotFound(genericResponseDTO);
+                }
+
+                o.UserId = u.UserId;
+            }
+            else
+            {
+                o.UserId = 1;
+            }
 
             _context.orders.Add(o);
             await _context.SaveChangesAsync();
 
-            //TODO: Use last here? possible problem with multiple requests at once
-            Order o2 = await _context.orders.LastAsync();
+            // Generate an idempotency token to ensure our requests are only handled once, in case of connection issues, etc.
+            o.IdempotencyToken = Guid.NewGuid().ToString();
 
             Random rand = new Random();
 
             int itemAmount = rand.Next(5);
 
-            List<Item> items = await _context.items.ToListAsync();
+            List<Item> items = await _context.items.Where(x => x.Active == true).ToListAsync();
             List<Item> cart = new List<Item>();
 
             for (int i = 0; i < itemAmount; i++)
@@ -131,41 +157,74 @@ namespace VippsCaseAPI.Controllers
                 Random rdm = new Random();
                 int index = rdm.Next(items.Count());
                 cart.Add(items[index]);
-                OrderItem tempOrderItem = new OrderItem(o2.OrderId, items[index].ItemId);
+                OrderItem tempOrderItem = new OrderItem(o.OrderId, items[index].ItemId);
                 _context.orderItems.Add(tempOrderItem);
             }
 
             await _context.SaveChangesAsync();
 
-            CartDTO cartToReturn = new CartDTO(o2.OrderId, cart);
+            CartDTO cartToReturn = new CartDTO(o.OrderId, cart);
 
             return Ok(cartToReturn);
         }
 
-        // POST: api/Orders
-        [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder([FromBody]JObject data)
+        [HttpPost("changeOrderStatus")]
+        public async Task<ActionResult> ChangeOrderStatus([FromBody]ChangeOrderStatusDTO cos)
         {
-            //TODO: Validation of data
-            //Get data from post body
-            int orderId = data["orderId"].ToObject<int>();
+            GenericResponseDTO genericResponseDTO = new GenericResponseDTO();
+            Order o = new Order();
 
-            //Retrieve connected cart
+            //Check if order exist
+            try
+            {
+                o = await _context.orders.FirstOrDefaultAsync(x => x.OrderId == cos.OrderId);
+            }
+            catch
+            {
+                genericResponseDTO.Message = "No order with that order Id exist";
+                return NotFound(genericResponseDTO);
+            }
 
-            Order order = await _context.orders.SingleOrDefaultAsync(x => x.OrderId == orderId);
+            //Check if status is valid
+            if (cos.Status >= 0 && cos.Status <= 4)
+            {
+                o.Status = (Statuses)cos.Status;
+            }
+            else
+            {
+                genericResponseDTO.Message = "The status is not valid. Try one of the following:" +
+                                                "\n0. In progress" +
+                                                "\n1. Accepted" +
+                                                "\n2. Declined" +
+                                                "\n3. Cart";
 
-            //Set Cart to an in progress order
-            order.Status = Statuses.InProgress;
+                return BadRequest(genericResponseDTO);
+            }
 
-            return Ok(order);
+            _context.Entry(o).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            genericResponseDTO.Message = "Order status was successfully changed";
+            return Ok(genericResponseDTO);
         }
 
-        [HttpPut("toggleActive/{id}")]
-        public async Task<IActionResult> UpdateActiveStatus(int id)
+        [HttpPost("toggleActive/{id}")]
+        public async Task<ActionResult> UpdateActiveStatus(int id)
         {
             Order order = new Order();
+            GenericResponseDTO genericResponseDTO = new GenericResponseDTO();
 
-            order = await _context.orders.FirstOrDefaultAsync(x => x.OrderId == id);
+            //Check if order exist
+            try
+            {
+                order = await _context.orders.FirstOrDefaultAsync(x => x.OrderId == id);
+            }
+            catch
+            {
+                genericResponseDTO.Message = "No order with the gice id exist";
+                return NotFound(genericResponseDTO);
+            }
 
             order.Active = !order.Active;
 
@@ -184,17 +243,11 @@ namespace VippsCaseAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
-            return NoContent();
+            genericResponseDTO.Message = "Active id was successfully changed";
+            return Ok(genericResponseDTO);
         }
 
         private bool OrderExists(int id)
