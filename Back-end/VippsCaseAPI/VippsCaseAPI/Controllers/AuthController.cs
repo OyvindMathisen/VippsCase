@@ -72,6 +72,8 @@ namespace VippsCaseAPI.Controllers
 
             string password = data["password"].ToString();
 
+            string role = data["role"].ToString();
+
             try
             {
                 User u = await _context.users.FirstOrDefaultAsync(x => x.Email == email);
@@ -83,7 +85,14 @@ namespace VippsCaseAPI.Controllers
 
                 if (hashedPassword == p.PasswordHash)
                 {
-                    return Ok(new LoginDTO(generateToken(u), "User Validated"));
+                    if(role == "user")
+                    {
+                        return Ok(new LoginDTO(generateToken(u), "User Validated"));
+                    }
+                    else
+                    {
+                        return Ok(new LoginDTO(generateAnonymousToken(), "User Validated"));
+                    }
                 }
                 else
                 {
@@ -96,6 +105,28 @@ namespace VippsCaseAPI.Controllers
             }
         }
 
+        private string generateAnonymousToken()
+        {
+            var key = Encoding.UTF8.GetBytes("super_secret_key_6060JK");
+
+            var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
+
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Role, "anonymous")
+            };
+
+            var token = new JwtSecurityToken
+            (
+                issuer: "admin",
+                audience: "user",
+                expires: DateTime.Now.AddHours(8),
+                signingCredentials: signingCredentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
         private string generateToken(User user)
         {
             var key = Encoding.UTF8.GetBytes("super_secret_key_6060JK");
@@ -104,6 +135,7 @@ namespace VippsCaseAPI.Controllers
 
             List<Claim> claims = new List<Claim>
             {
+                new Claim(ClaimTypes.Role, "user"),
                 new Claim("Name", user.Name),
                 new Claim("AddressLineOne", user.AddressLineOne),
                 new Claim("County", user.County),

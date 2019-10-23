@@ -56,7 +56,6 @@ export class PersonInformationComponent implements OnInit {
       this.personDetails.controls.country.setValue(userInfo.Country);
       this.personDetails.controls.phoneNumber.setValue(userInfo.PhoneNumber);
       this.personDetails.controls.email.setValue(userInfo.Email);
-      
     }
     
   }
