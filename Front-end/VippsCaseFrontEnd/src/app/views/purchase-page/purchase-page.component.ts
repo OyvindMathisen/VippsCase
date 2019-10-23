@@ -22,6 +22,7 @@ export class PurchasePageComponent implements OnInit {
   card: any;
   items: any;
   disablePurchaseButton: boolean;
+  total: number;
 
   constructor(private stripeService: StripeService, private router: Router, private cartService: CartService) {
     // Stripe Init
@@ -137,6 +138,14 @@ export class PurchasePageComponent implements OnInit {
     this.cartService.newCart(userId).subscribe((data) => {
       localStorage.setItem('order_id', data.orderId);
       this.items = data.items;
+
+      this.total = 0;
+
+      console.log(this.total);
+
+      this.items.forEach(item => {
+        this.total += item.price;
+      });
     });
   }
 }
