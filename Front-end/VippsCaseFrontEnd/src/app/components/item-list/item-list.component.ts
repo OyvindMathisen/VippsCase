@@ -21,12 +21,4 @@ export class ItemListComponent implements OnInit {
     }
   }
 
-  getCart() {
-    // Get new cart:
-    this.cartService.newCart(parseInt(localStorage.getItem('user_id'), 10)).subscribe((data) => {
-      localStorage.setItem('order_id', data.orderId);
-      this.items = data.items;
-    });
-  }
-
 }
