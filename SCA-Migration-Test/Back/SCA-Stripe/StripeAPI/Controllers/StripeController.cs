@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using StripeAPI.Models;
 
@@ -20,16 +13,29 @@ namespace StripeAPI.Controllers
         {
             StripeConfiguration.ApiKey = "sk_test_MXy5T17TOA2npPloYXbFlkfy007am6BLoY";
             var service = new PaymentIntentService();
-            var options = new PaymentIntentCreateOptions
-            {
-                PaymentMethod = request.PaymentMethodId,
-                Amount = 1099,
-                Currency = "nok",
-                ConfirmationMethod = "manual",
-                Confirm = true,
-            };
+            PaymentIntent paymentIntent;
 
-            var paymentIntent = service.Create(options);
+            if (request.PaymentMethodId != null)
+            {
+                var options = new PaymentIntentCreateOptions
+                {
+                    PaymentMethod = request.PaymentMethodId,
+                    Amount = 1099,
+                    Currency = "nok",
+                    ConfirmationMethod = "manual",
+                    Confirm = true,
+                };
+                paymentIntent = service.Create(options);
+            }
+            else
+            {
+                var options = new PaymentIntentConfirmOptions { };
+                paymentIntent = service.Confirm(
+                    request.PaymentIntentId,
+                    options
+                    );
+            }
+
             return GeneratePaymentResponse(paymentIntent);
         }
 

@@ -43,18 +43,15 @@ var form = document.getElementById("payment-form");
 form.addEventListener("submit", async function(event) {
   event.preventDefault();
 
-  const { paymentMethod } = await stripe.createPaymentMethod(
-    "card",
-    card
-  );
+  const { paymentMethod } = await stripe.createPaymentMethod('card', card);
 
-  const response = await fetch("https://localhost:44321/stripe", {
+  const response = await fetch('https://localhost:44321/stripe', {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      paymentmethodid: paymentMethod.id
+      paymentMethodId: paymentMethod.id
     })
   });
 
@@ -65,37 +62,35 @@ async function handleServerResponse(response) {
   if (response.error) {
     // Show error from server on payment form
     const errorElement = document.getElementById("card-errors");
-    errorElement.textContent = response.error.message;
+    errorElement.textContent = response.error;
   } else if (response.requires_action) {
     // Use Stripe.js to handle required card action
     await handleAction(response);
   } else {
     // Show success message
-    alert('Success!');
+    alert("Success!");
   }
 }
 
 async function handleAction(response) {
-  const { error: errorAction, paymentIntent } = await stripe.handleCardAction(
-    response.payment_intent_client_secret
-  );
+  const { error: errorAction, paymentIntent } = await stripe.handleCardAction(response.payment_intent_client_secret);
 
   if (errorAction) {
-    // Show error from Stripe.js in payment form
+    // Show error from Stripe.js in payment
     const errorElement = document.getElementById("card-errors");
-    errorElement.textContent = errorAction.error.message;
+    errorElement.textContent = errorAction.message;
   } else {
-    const response = await fetch("https://localhost:44321/stripe", {
-      method: "POST",
+    const response = await fetch('https://localhost:44321/stripe', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        payment_intent_id: paymentIntent.id
+        paymentIntentId: paymentIntent.id
       })
     });
 
     // Step 3: handle server response
-    handleServerResponse(response.json);
+    handleServerResponse(await response.json);
   }
 }
