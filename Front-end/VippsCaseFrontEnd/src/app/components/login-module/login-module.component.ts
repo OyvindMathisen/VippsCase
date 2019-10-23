@@ -46,7 +46,7 @@ export class LoginModuleComponent implements OnInit {
     this.event = event.target.checked;
   }
 
-  loginClicked(email, pwd){
+  loginClicked(email, pwd, role){
     console.log("Login method called...");
     this.cookieValueUsername = this.cookie.get('username');
     this.cookieValuePassword = this.cookie.get('password');
@@ -59,9 +59,9 @@ export class LoginModuleComponent implements OnInit {
 
     this.login = {
       email: email,
-      password: pwd
+      password: pwd,
+      role: role
     }
-    
     
     this.loginService.login(this.login).subscribe(
       data => {

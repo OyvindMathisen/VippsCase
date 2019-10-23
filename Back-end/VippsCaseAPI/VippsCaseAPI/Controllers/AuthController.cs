@@ -74,6 +74,11 @@ namespace VippsCaseAPI.Controllers
 
             string role = data["role"].ToString();
 
+            if(role == "anonymous")
+            {
+                return Ok(new LoginDTO(generateAnonymousToken(), "Anonymous user logged in"));
+            }
+
             try
             {
                 User u = await _context.users.FirstOrDefaultAsync(x => x.Email == email);
@@ -85,14 +90,7 @@ namespace VippsCaseAPI.Controllers
 
                 if (hashedPassword == p.PasswordHash)
                 {
-                    if(role == "user")
-                    {
-                        return Ok(new LoginDTO(generateToken(u), "User Validated"));
-                    }
-                    else
-                    {
-                        return Ok(new LoginDTO(generateAnonymousToken(), "User Validated"));
-                    }
+                    return Ok(new LoginDTO(generateToken(u), "User Validated"));
                 }
                 else
                 {
@@ -113,7 +111,7 @@ namespace VippsCaseAPI.Controllers
 
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, "anonymous")
+                new Claim("Role", "anonymous")
             };
 
             var token = new JwtSecurityToken
@@ -121,7 +119,8 @@ namespace VippsCaseAPI.Controllers
                 issuer: "admin",
                 audience: "user",
                 expires: DateTime.Now.AddHours(8),
-                signingCredentials: signingCredentials
+                signingCredentials: signingCredentials,
+                claims: claims
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
@@ -135,7 +134,7 @@ namespace VippsCaseAPI.Controllers
 
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, "user"),
+                new Claim("Role", "user"),
                 new Claim("Name", user.Name),
                 new Claim("AddressLineOne", user.AddressLineOne),
                 new Claim("County", user.County),

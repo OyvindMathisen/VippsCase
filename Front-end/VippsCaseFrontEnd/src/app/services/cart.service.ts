@@ -58,7 +58,8 @@ export class CartService {
 
   newCart(userId: number): Observable<any> {
     const token = localStorage.getItem('id_token');
-
+    console.log(userId);
+    
     return this.http.post(environment.baseApi + 'api/orders/newCart', {userId},
     {
       headers: new HttpHeaders({

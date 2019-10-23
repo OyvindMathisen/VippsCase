@@ -127,8 +127,14 @@ export class PurchasePageComponent implements OnInit {
   
 
   getCart() {
+    let userId = 0;
+
+    if(isFinite(parseInt(localStorage.getItem('user_id'), 10))){
+      userId = parseInt(localStorage.getItem('user_id'), 10);
+    }
+    
     // Get new cart:
-    this.cartService.newCart(parseInt(localStorage.getItem('user_id'), 10)).subscribe((data) => {
+    this.cartService.newCart(userId).subscribe((data) => {
       localStorage.setItem('order_id', data.orderId);
       this.items = data.items;
     });
