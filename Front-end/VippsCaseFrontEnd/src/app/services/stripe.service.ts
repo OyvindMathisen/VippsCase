@@ -22,8 +22,8 @@ export class StripeService {
 
   constructor(private http: HttpClient) { }
 
-  addCharge(charge: StripeCharge): Observable<any> {
-    return this.http.post(this.makeChargeEndpoint, charge, this.options);
+  addCharge(charge: StripeCharge): Promise<any> {
+    return this.http.post(this.makeChargeEndpoint, charge, this.options).toPromise();
   }
 
   addCustomer(customer: StripeCustomer): Observable<any> {

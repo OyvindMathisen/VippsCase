@@ -16,7 +16,6 @@ import { LoginModuleComponent } from './components/login-module/login-module.com
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
-import { StripeCardInputComponent } from './components/stripe-card-input/stripe-card-input.component';
 import { ErrorComponent } from './components/error/error.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { PersonInformationComponent } from './components/person-information/person-information.component';
@@ -35,7 +34,6 @@ import { OrderListComponent } from './components/order-list/order-list.component
     BillComponent,
     NavBarComponent,
     FooterComponent,
-    StripeCardInputComponent,
     ProfileDetailsComponent,
     ErrorComponent,
     PageNotFoundComponent,
