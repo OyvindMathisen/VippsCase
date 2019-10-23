@@ -21,6 +21,9 @@ import { ErrorComponent } from './components/error/error.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { PersonInformationComponent } from './components/person-information/person-information.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
+import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { CookieService } from 'ngx-cookie-service';
 
@@ -42,7 +45,7 @@ import { CookieService } from 'ngx-cookie-service';
     ErrorComponent,
     PageNotFoundComponent,
     PersonInformationComponent,
-    OrderListComponent
+    OrderListComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,11 @@ import { CookieService } from 'ngx-cookie-service';
     ReactiveFormsModule
   ],
   providers: [
-    CookieService
+    CookieService,
+    AuthService,
+    AuthGuardService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService
   ],
   bootstrap: [AppComponent]
 })
