@@ -22,6 +22,8 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 import { PersonInformationComponent } from './components/person-information/person-information.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 
+import { CookieService } from 'ngx-cookie-service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +51,9 @@ import { OrderListComponent } from './components/order-list/order-list.component
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
