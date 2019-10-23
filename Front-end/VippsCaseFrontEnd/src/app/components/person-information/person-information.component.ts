@@ -38,6 +38,27 @@ export class PersonInformationComponent implements OnInit {
       phoneNumber: new FormControl('', [Validators.required, Validators.pattern('(?:\\d{2} ?){4}|\\d{3} ?\\d{2} ?\\d{3}')]),
       email: new FormControl('', [Validators.required, Validators.email])
     });
+
+    const userId: number = parseInt(localStorage.getItem('user_id'));
+    const token: string = localStorage.getItem('id_token');
+    
+    if(userId != NaN){
+      console.log(atob(token.split('.')[1]));
+      const userInfo: any = JSON.parse(atob(token.split('.')[1]));
+      
+      //Set values of person-information form
+      this.personDetails.controls.fullName.setValue(userInfo.Name);
+      this.personDetails.controls.addressLineOne.setValue(userInfo.AddressLineOne);
+      this.personDetails.controls.addressLineTwo.setValue(userInfo.AddressLineTwo);
+      this.personDetails.controls.county.setValue(userInfo.County);
+      this.personDetails.controls.postalCode.setValue(userInfo.PostalCode);
+      this.personDetails.controls.city.setValue(userInfo.City);
+      this.personDetails.controls.country.setValue(userInfo.Country);
+      this.personDetails.controls.phoneNumber.setValue(userInfo.PhoneNumber);
+      this.personDetails.controls.email.setValue(userInfo.Email);
+      
+    }
+    
   }
 
   onPurchaseClicked() {
