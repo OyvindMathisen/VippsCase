@@ -42,7 +42,7 @@ export class PersonInformationComponent implements OnInit {
     const userId: number = parseInt(localStorage.getItem('user_id'));
     const token: string = localStorage.getItem('id_token');
     
-    if(userId != NaN){
+    if(isFinite(userId)){
       console.log(atob(token.split('.')[1]));
       const userInfo: any = JSON.parse(atob(token.split('.')[1]));
       
