@@ -64,9 +64,8 @@ export class PurchasePageComponent implements OnInit {
     // Resetting the error message from stripe-backend
     this.stripeError = '';
 
-    // TODO: Replace this with the totalCost from the shoppingCart
     // NOTE: Multiply the sum with 100, as Stripe calculates from the lowest denominator, which is "øre" in nok.
-    const cost = 1000 * 100;
+    const cost = this.total * 100;
 
     this.stripe.createToken(this.card).then((result) => {
       if (result.error) {
@@ -125,15 +124,13 @@ export class PurchasePageComponent implements OnInit {
     this.cardError = event.nativeElement;
   }
 
-  
-
   getCart() {
     let userId = 0;
 
-    if(isFinite(parseInt(localStorage.getItem('user_id'), 10))){
+    if (isFinite(parseInt(localStorage.getItem('user_id'), 10))){
       userId = parseInt(localStorage.getItem('user_id'), 10);
     }
-    
+
     // Get new cart:
     this.cartService.newCart(userId).subscribe((data) => {
       localStorage.setItem('order_id', data.orderId);
@@ -141,11 +138,11 @@ export class PurchasePageComponent implements OnInit {
 
       this.total = 0;
 
-      console.log(this.total);
-
-      this.items.forEach(item => {
+      this.items.forEach((item: any) => {
         this.total += item.price;
       });
+
+      console.log(this.total);
     });
   }
 }
