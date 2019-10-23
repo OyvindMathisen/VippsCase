@@ -26,6 +26,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { CookieService } from 'ngx-cookie-service';
+import { RoleGuardService } from './services/role-guard.service';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { CookieService } from 'ngx-cookie-service';
     CookieService,
     AuthService,
     AuthGuardService,
+    RoleGuardService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService
   ],

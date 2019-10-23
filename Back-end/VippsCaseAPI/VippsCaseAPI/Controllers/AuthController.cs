@@ -111,7 +111,7 @@ namespace VippsCaseAPI.Controllers
 
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, "anonymous")
+                new Claim("Role", "anonymous")
             };
 
             var token = new JwtSecurityToken
@@ -134,7 +134,7 @@ namespace VippsCaseAPI.Controllers
 
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Role, "user"),
+                new Claim("Role", "user"),
                 new Claim("Name", user.Name),
                 new Claim("AddressLineOne", user.AddressLineOne),
                 new Claim("County", user.County),
