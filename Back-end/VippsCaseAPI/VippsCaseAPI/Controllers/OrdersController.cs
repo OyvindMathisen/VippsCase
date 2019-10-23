@@ -120,17 +120,24 @@ namespace VippsCaseAPI.Controllers
             GenericResponseDTO genericResponseDTO = new GenericResponseDTO();
 
             //Check if user exists
-            try
+            if (u.UserId != 0)
             {
-                await _context.users.FirstAsync(x => x.UserId == u.UserId);
-            }
-            catch
-            {
-                genericResponseDTO.Message = "No user with that ID found";
-                return NotFound(genericResponseDTO);
-            }
+                try
+                {
+                    await _context.users.FirstAsync(x => x.UserId == u.UserId);
+                }
+                catch
+                {
+                    genericResponseDTO.Message = "No user with that ID found";
+                    return NotFound(genericResponseDTO);
+                }
 
-            o.UserId = u.UserId;
+                o.UserId = u.UserId;
+            }
+            else
+            {
+                o.UserId = 1;
+            }
 
             _context.orders.Add(o);
             await _context.SaveChangesAsync();
