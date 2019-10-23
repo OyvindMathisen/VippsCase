@@ -74,6 +74,11 @@ namespace VippsCaseAPI.Controllers
 
             string role = data["role"].ToString();
 
+            if(role == "anonymous")
+            {
+                return Ok(new LoginDTO(generateAnonymousToken(), "Anonymous user logged in"));
+            }
+
             try
             {
                 User u = await _context.users.FirstOrDefaultAsync(x => x.Email == email);
@@ -85,14 +90,7 @@ namespace VippsCaseAPI.Controllers
 
                 if (hashedPassword == p.PasswordHash)
                 {
-                    if(role == "user")
-                    {
-                        return Ok(new LoginDTO(generateToken(u), "User Validated"));
-                    }
-                    else
-                    {
-                        return Ok(new LoginDTO(generateAnonymousToken(), "User Validated"));
-                    }
+                    return Ok(new LoginDTO(generateToken(u), "User Validated"));
                 }
                 else
                 {
