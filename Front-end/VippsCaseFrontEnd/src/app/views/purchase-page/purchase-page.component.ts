@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { StripeCharge } from 'src/app/shared/models/stripe-charge.model';
 import { CartService } from 'src/app/services/cart.service';
-import { StripeCustomer } from 'src/app/shared/models/stripe-customer.model';
 
 @Component({
   selector: 'app-purchase-page',
@@ -55,50 +54,58 @@ export class PurchasePageComponent implements OnInit {
   }
 
   async createCharge(event: any) {
-    // Cart to InProgress
-    this.cartService.changeOrderStatus(parseInt(localStorage.getItem('order_id'), 10), 0).subscribe((data) => {
-      console.log('Cart to "InProgress"' + data);
-    });
-
     // Resetting the error message from stripe-backend
     this.stripeError = '';
 
     // TODO: Replace this with the totalCost from the shoppingCart
     // NOTE: Multiply the sum with 100, as Stripe calculates from the lowest denominator, which is "øre" in nok.
-    const cost = 1000 * 100;
+    const inputCost = 1000;
+    const cost = inputCost * 100;
 
     const { paymentMethod } = await this.stripe.createPaymentMethod('card', this.card);
     const userId = parseInt(localStorage.getItem('user_id'), 10);
     const cartId = parseInt(localStorage.getItem('order_id'), 10);
 
-    const charge = {} as StripeCharge;
-    charge.paymentMethodId = paymentMethod.id;
-    charge.totalCost = cost;
-    charge.userId = isNaN(userId) ? -1 : userId;
-    charge.cartId = isNaN(cartId) ? -1 : cartId;
-    charge.customerDetails = event;
+    if (paymentMethod) {
+      const charge = {} as StripeCharge;
+      charge.paymentMethodId = paymentMethod.id;
+      charge.totalCost = cost;
+      charge.userId = isNaN(userId) ? -1 : userId;
+      charge.cartId = isNaN(cartId) ? -1 : cartId;
+      charge.customerDetails = event;
 
-    this.stripeService.addCharge(charge).subscribe(
-      (response) => {
-        this.handleServerResponse(response);
-      },
-      (error) => {
-        // TODO: Replace with generic "Unable to conact our server" message
-        this.stripeError = error.message;
-      }
-    );
+      this.stripeService.addCharge(charge).subscribe(
+        // Success
+        (response) => {
+          this.handleServerResponse(response, cartId);
+        },
+        // Error
+        () => {
+          this.cartService.changeOrderStatus(cartId, 0).subscribe();
+          this.stripeError = 'We were unable to contact our server to make the transaction. Please try again later.';
+          this.disablePurchaseButton = false;
+        }
+      );
+    } else {
+      // The stripe element is missing one or more elements.
+      // Leave the error handling to the Stripe.Element.
+      this.cartService.changeOrderStatus(cartId, 0).subscribe();
+      this.disablePurchaseButton = false;
+    }
   }
 
-  async handleServerResponse(response: any) {
-    console.log(response);
+  async handleServerResponse(response: any, cartId: number) {
     if (response.error) {
       // Show error from server on payment form
       this.stripeError = response.error;
+      this.cartService.changeOrderStatus(cartId, 2).subscribe();
+      this.disablePurchaseButton = false;
+      console.log('LOCAL BUTTON:' + this.disablePurchaseButton);
     } else if (response.data != null && response.data.requires_action) {
       await this.handleAction(response.data);
     } else {
-      // Show success message
-      alert('Success!');
+      this.cartService.changeOrderStatus(cartId, 1).subscribe();
+      this.router.navigate(['/confirmation']);
     }
   }
 
@@ -115,18 +122,20 @@ export class PurchasePageComponent implements OnInit {
     if (errorAction) {
       // Show error from Stripe.js in payment
       this.stripeError = errorAction.message;
+      this.disablePurchaseButton = false;
     } else {
       this.stripeService.addCharge(charge).subscribe(
         (response: any) => {
-          this.handleServerResponse(response);
+          this.handleServerResponse(response, cartId);
         },
         (error: any) => {
           this.stripeError = error.message;
+          this.cartService.changeOrderStatus(cartId, 0).subscribe();
+          this.disablePurchaseButton = false;
         }
       );
     }
   }
-
   // Received from the stripe-card-element after initialization for us to handle error messages
   // related to the stripe element on submit.
   storeCard(event: any) {

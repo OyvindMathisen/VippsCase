@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using VippsCaseAPI.DataAccess;
-using VippsCaseAPI.Migrations;
 using VippsCaseAPI.Models;
 using VippsCaseAPI.Models.Stripe;
 using Order = VippsCaseAPI.Models.Order;
@@ -162,15 +160,15 @@ namespace VippsCaseAPI.Controllers
         }
 
         [HttpGet("get-charge")]
-        public ActionResult<StripeResult> Get([FromBody] StripeChargeRequest value)
+        public ActionResult<StripeResult> Get([FromBody] StripeChargeRequest request)
         {
             StripeConfiguration.ApiKey = StripeApiKey;
 
             StripeResult result = new StripeResult();
-            ChargeService service = new ChargeService();
+            PaymentIntentService service = new PaymentIntentService();
             try
             {
-                Charge charge = service.Get(value.Id);
+                PaymentIntent charge = service.Get(request.Id);
                 result.Data = charge;
                 result.Success = true;
             }
