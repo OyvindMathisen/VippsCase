@@ -41,6 +41,21 @@ export class CartService {
     return this.http.get(environment.baseApi + 'api/items/', requestOptions);
   }
 
+  getOrdersByUserId(userId: number): Observable<any> {
+    const token = localStorage.getItem('id_token');
+    const headerDict = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      Authorization: `Bearer ${token}`
+    }
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+
+    return this.http.get(environment.baseApi + `api/orders/getOrdersByUserID/${userId}`, requestOptions);
+  }
+
   newCart(userId: number): Observable<any> {
     const token = localStorage.getItem('id_token');
 
