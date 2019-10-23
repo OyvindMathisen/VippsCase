@@ -10,8 +10,8 @@ import { environment } from '../../environments/environment';
 })
 
 export class StripeService {
-  // private baseUrl = 'https://localhost:44399/' + 'api/stripe/';
-  private baseUrl = environment.baseApi + 'api/stripe/';
+  private baseUrl = 'https://localhost:44399/' + 'api/stripe/';
+  // private baseUrl = environment.baseApi + 'api/stripe/';
   private makeChargeEndpoint = this.baseUrl + 'charge';
   private addCustomerEndpoint = this.baseUrl + 'add-customer';
   private options = {

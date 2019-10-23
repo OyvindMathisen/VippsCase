@@ -39,14 +39,14 @@ export class PersonInformationComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email])
     });
 
-    const userId: number = parseInt(localStorage.getItem('user_id'));
+    const userId: number = parseInt(localStorage.getItem('user_id'), 10);
     const token: string = localStorage.getItem('id_token');
-    
-    if(userId != NaN){
+
+    if (isFinite(userId)) {
       console.log(atob(token.split('.')[1]));
       const userInfo: any = JSON.parse(atob(token.split('.')[1]));
-      
-      //Set values of person-information form
+
+      // Set values of person-information form
       this.personDetails.controls.fullName.setValue(userInfo.Name);
       this.personDetails.controls.addressLineOne.setValue(userInfo.AddressLineOne);
       this.personDetails.controls.addressLineTwo.setValue(userInfo.AddressLineTwo);
@@ -56,9 +56,9 @@ export class PersonInformationComponent implements OnInit {
       this.personDetails.controls.country.setValue(userInfo.Country);
       this.personDetails.controls.phoneNumber.setValue(userInfo.PhoneNumber);
       this.personDetails.controls.email.setValue(userInfo.Email);
-      
+
     }
-    
+
   }
 
   onPurchaseClicked() {

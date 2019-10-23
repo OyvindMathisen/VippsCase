@@ -44,7 +44,7 @@ export class PurchasePageComponent implements OnInit {
       }
     };
 
-    this.card = elements.create('card', {style, hidePostalCode: true });
+    this.card = elements.create('card', { style, hidePostalCode: true });
   }
 
   ngOnInit() {
@@ -54,7 +54,7 @@ export class PurchasePageComponent implements OnInit {
     });
   }
 
-  createCharge(event: any) {
+  async createCharge(event: any) {
     // Cart to InProgress
     this.cartService.changeOrderStatus(parseInt(localStorage.getItem('order_id'), 10), 0).subscribe((data) => {
       console.log('Cart to "InProgress"' + data);
@@ -67,55 +67,64 @@ export class PurchasePageComponent implements OnInit {
     // NOTE: Multiply the sum with 100, as Stripe calculates from the lowest denominator, which is "øre" in nok.
     const cost = 1000 * 100;
 
-    this.stripe.createToken(this.card).then((result) => {
-      if (result.error) {
-        // Inform the user if there was an error
-        this.cardError.textContent = result.error.message;
-        this.disablePurchaseButton = false;
-      } else {
-        // Send the token to the server
-        this.stripeTokenHandler(result.token.id, cost, event);
-      }
-    });
-  }
-
-  stripeTokenHandler(token: string, cost: number, customerData: StripeCustomer) {
-    // Obtaining values from our localStorage
+    const { paymentMethod } = await this.stripe.createPaymentMethod('card', this.card);
     const userId = parseInt(localStorage.getItem('user_id'), 10);
     const cartId = parseInt(localStorage.getItem('order_id'), 10);
 
-    // Generates the charge object, adding the values and handing the response.
     const charge = {} as StripeCharge;
-    charge.stripeToken = token;
+    charge.paymentMethodId = paymentMethod.id;
     charge.totalCost = cost;
     charge.userId = isNaN(userId) ? -1 : userId;
     charge.cartId = isNaN(cartId) ? -1 : cartId;
-    charge.customerDetails = customerData;
+    charge.customerDetails = event;
 
-    // Redirects the user to the confirmation page if everything went as expected.
-    const order = parseInt(localStorage.getItem('order_id'), 10);
     this.stripeService.addCharge(charge).subscribe(
-      (data) => {
-        console.log(data);
-        // Cart to Accepted
-        if (data.successful) {
-          this.cartService.changeOrderStatus(order, 1).subscribe();
-          this.router.navigate(['/confirmation']);
-        } else {
-          // Cart to Declined
-          this.cartService.changeOrderStatus(order, 2).subscribe();
-          this.stripeError = data.errorMessage;
-        }
+      (response) => {
+        this.handleServerResponse(response);
       },
       (error) => {
-        console.error(error);
-        // Cart to Declined
-        this.cartService.changeOrderStatus(order, 0).subscribe();
+        // TODO: Replace with generic "Unable to conact our server" message
         this.stripeError = error.message;
       }
     );
+  }
 
-    this.disablePurchaseButton = false;
+  async handleServerResponse(response: any) {
+    console.log(response);
+    if (response.error) {
+      // Show error from server on payment form
+      this.stripeError = response.error;
+    } else if (response.data != null && response.data.requires_action) {
+      await this.handleAction(response.data);
+    } else {
+      // Show success message
+      alert('Success!');
+    }
+  }
+
+  async handleAction(input: any) {
+    const { error: errorAction, paymentIntent } = await this.stripe.handleCardAction(input.payment_intent_client_secret);
+    const userId = parseInt(localStorage.getItem('user_id'), 10);
+    const cartId = parseInt(localStorage.getItem('order_id'), 10);
+
+    const charge = {} as StripeCharge;
+    charge.paymentIntentId = paymentIntent.id;
+    charge.userId = userId;
+    charge.cartId = cartId;
+
+    if (errorAction) {
+      // Show error from Stripe.js in payment
+      this.stripeError = errorAction.message;
+    } else {
+      this.stripeService.addCharge(charge).subscribe(
+        (response: any) => {
+          this.handleServerResponse(response);
+        },
+        (error: any) => {
+          this.stripeError = error.message;
+        }
+      );
+    }
   }
 
   // Received from the stripe-card-element after initialization for us to handle error messages
