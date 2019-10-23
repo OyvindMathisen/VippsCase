@@ -35,13 +35,11 @@ export class LoginModuleComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.username = document.getElementById('username');
-    this.password = document.getElementById('password');
+    // this.username = document.getElementById('username');
+    // this.password = document.getElementById('password');
     
-    this.username.value = this.cookie.get('username');
-    this.password.value = this.cookie.get('password');
-    console.log(this.username);
-    console.log(this.password);
+    this.username = this.cookie.get('username');
+    this.password = this.cookie.get('password');
   }
 
   onRememberMe(event) {
