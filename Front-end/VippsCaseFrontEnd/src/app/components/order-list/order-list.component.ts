@@ -20,9 +20,7 @@ export class OrderListComponent implements OnInit {
     }
     this.cartService.getOrdersByUserId(28).subscribe((data) => {
       // Orders are sorted by newest first by themselves
-      console.log(data);
       this.orders = data;
     })
   }
-
 }
