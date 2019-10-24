@@ -16,6 +16,7 @@ export class PersonInformationComponent implements OnInit {
 
   // Outputs
   @Output() purchaseConfirmed: EventEmitter<any>;
+  @Output() purchaseFailed: EventEmitter<any>;
 
   // Equivalent of using document.getElement()
   @ViewChild('cardErrors', { static: false }) cardErrors: ElementRef;
@@ -27,6 +28,7 @@ export class PersonInformationComponent implements OnInit {
 
   constructor(private stripeService: StripeService, private cartService: CartService) {
     this.purchaseConfirmed = new EventEmitter();
+    this.purchaseFailed = new EventEmitter();
   }
 
   ngOnInit() {
@@ -195,7 +197,7 @@ export class PersonInformationComponent implements OnInit {
     // Change the state of our cart as the order did not go through.
     this.cartService.changeOrderStatus(charge.cartId, cartState).subscribe();
     // Display error to the user.
-    this.stripeError = error.message ? error.message : error.error;
+    this.purchaseFailed.emit(error);
     // Re-enable the button.
     this.disablePurchaseButton = false;
   }

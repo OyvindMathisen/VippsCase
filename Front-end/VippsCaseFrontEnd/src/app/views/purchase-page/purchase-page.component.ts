@@ -11,6 +11,7 @@ import { CartService } from 'src/app/services/cart.service';
 export class PurchasePageComponent implements OnInit {
   // Local Variables
   stripe: stripe.Stripe;
+  stripeError: string;
   card: any;
   items: any;
 
@@ -55,5 +56,9 @@ export class PurchasePageComponent implements OnInit {
 
   onPurchaseSuccess(event: any) {
     this.router.navigate(['/confirmation']);
+  }
+
+  onPurchaseFailed(event: any) {
+    this.stripeError = event.message ? event.message : event.error;
   }
 }

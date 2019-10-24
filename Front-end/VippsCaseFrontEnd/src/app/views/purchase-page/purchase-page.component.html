@@ -5,8 +5,13 @@
     <div class="col-sm-6">
       <app-person-information [card]="card" 
                               [stripe]="stripe"
-                              (purchaseConfirmed)="onPurchaseSuccess($event)">
+                              (purchaseConfirmed)="onPurchaseSuccess($event)"
+                              (purchaseFailed)="onPurchaseFailed($event)">
       </app-person-information>
+
+      <div *ngIf="stripeError != ''"class="stripeBackendError">
+        {{ stripeError }}
+      </div>
     </div>
     
     <div class="col-sm-6 scrollDiv" id="style-2">

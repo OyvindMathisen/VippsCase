@@ -119,6 +119,8 @@
     </div>
   </div>
 
+  <br />
+
   <div class="submit">
     <!-- Button is disabled until all of the required fields (except stripe) has been filled in. -->
     <button (click)="onPurchaseClicked()" [disabled]="personDetails.invalid || disablePurchaseButton"
@@ -134,9 +136,5 @@
         Purchase
       </ng-template>
     </button>
-  </div>
-
-  <div *ngIf="stripeError != ''"class="stripeBackendError">
-    {{ stripeError }}
   </div>
 </form>
