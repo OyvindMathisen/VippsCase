@@ -18,12 +18,12 @@ export class OrderListComponent implements OnInit {
     if (!this.orders) {
       this.orders = [];
     }
-    this.cartService.getOrdersByUserId(parseInt(localStorage.getItem('user_id'))).subscribe((data) => {
-      this.orders = data.map(order => {
+    this.cartService.getOrdersByUserId(parseInt(localStorage.getItem('user_id'), 10)).subscribe((data) => {
+      this.orders = data.map((order: any) => {
         order.visible = false;
         return order;
       });
-    })
+    });
   }
 
   onShowOrderClicked(id: number) {
