@@ -2,7 +2,8 @@
 {
     public class StripeCharge
     {
-        public string StripeToken { get; set; }
+        public string PaymentMethodId { get; set; }
+        public string PaymentIntentId { get; set; }
         public long TotalCost { get; set; }
         public int UserId { get; set; }
         public int CartId { get; set; }
@@ -11,7 +12,7 @@
 
         public override string ToString()
         {
-            return $"StripeToken: {StripeToken}, TotalCost: {TotalCost}, CustomerDetails: {CustomerDetails}, UserId: {UserId}, CartId: {CartId}.";
+            return $"PaymentMethodId: {PaymentMethodId}, PaymentIntentId: {PaymentIntentId}, TotalCost: {TotalCost}, CustomerDetails: {CustomerDetails}, UserId: {UserId}, CartId: {CartId}.";
         }
     }
 }

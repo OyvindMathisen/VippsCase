@@ -108,21 +108,30 @@
   </div>
 
   <div class="paymentDetails">
-    <app-stripe-card-input [card]="card" (cardInitialized)="stripeCardInited($event)"></app-stripe-card-input>
+    <label for="card-element">
+      Credit or debit card
+    </label>
+    <div id="card-element">
+      <!-- A Stripe Element will be inserted here.-->
+    </div>
+    <div id="card-errors" #cardErrors role="alert">
+      <!-- Used to display form errors-->
+    </div>
   </div>
-  <div *ngIf="stripeError != ''"class="stripeBackendError">
-    <p>{{ stripeError }}</p>
-  </div>
-  <br/>
+
+  <br />
+
   <div class="submit">
     <!-- Button is disabled until all of the required fields (except stripe) has been filled in. -->
     <button (click)="onPurchaseClicked()" [disabled]="personDetails.invalid || disablePurchaseButton"
       class="btn btn-success btn-block" style="width: 360px">
+      
       <div id="loader" *ngIf="disablePurchaseButton; else canMakePurchase">
         <div id="loader_1" class="loader"></div>
         <div id="loader_2" class="loader"></div>
         <div id="loader_3" class="loader"></div>
       </div>
+
       <ng-template #canMakePurchase>
         Purchase
       </ng-template>

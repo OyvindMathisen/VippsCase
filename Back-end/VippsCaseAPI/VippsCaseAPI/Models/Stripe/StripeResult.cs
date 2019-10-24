@@ -2,8 +2,8 @@
 {
     public class StripeResult
     {
-        public bool Successful { get; set; }
+        public bool Success { get; set; }
         public object Data { get; set; }
-        public string ErrorMessage { get; set; }
+        public string Error { get; set; }
     }
 }
