@@ -11,18 +11,12 @@
     "postInstall": "ng build --aot --prod"
   },
   "engines": {
-    "node": "10.16.3",
+    "node": "10.x",
     "npm": "6.9.0"
   },
-  "buildpacks": [
-    {
-      "url": "heroku/nodejs"
-    }
-  ],
   "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.8",
-    "@angular/cli": "^8.3.14",
     "@angular/common": "~8.2.8",
     "@angular/compiler": "~8.2.8",
     "@angular/core": "~8.2.8",
@@ -43,6 +37,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
+    "@angular/cli": "^8.3.14",
     "@angular/compiler-cli": "^8.2.12",
     "@angular-devkit/build-angular": "~0.803.6",
     "@angular/language-service": "~8.2.8",
