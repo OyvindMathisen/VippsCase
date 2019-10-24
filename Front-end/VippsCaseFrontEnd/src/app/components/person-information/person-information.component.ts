@@ -95,7 +95,7 @@ export class PersonInformationComponent implements OnInit {
   // Initialization
   initForm() {
     this.personDetails = new FormGroup({
-      fullName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
+      fullName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÆØÅæøå ]*$')]),
       addressLineOne: new FormControl('', [Validators.required]),
       addressLineTwo: new FormControl(''),
       county: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
