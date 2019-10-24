@@ -50,7 +50,7 @@ export class PersonInformationComponent implements OnInit {
   async onPurchaseClicked() {
     // Disable button to prevent multiple inputs
     this.disablePurchaseButton = true;
-    this.stripeError = '';
+    this.purchaseFailed.emit('');
 
     // Check if the stripe component has been filled out fully!
     const { paymentMethod } = await this.stripe.createPaymentMethod('card', this.card);
