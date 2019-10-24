@@ -14,6 +14,7 @@ export class StripeService {
   private baseUrl = environment.baseApi + 'api/stripe/';
   private makeChargeEndpoint = this.baseUrl + 'charge';
   private addCustomerEndpoint = this.baseUrl + 'add-customer';
+  private chargeFailedEndpoint = this.baseUrl + 'charge-failed';
   private options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -22,8 +23,12 @@ export class StripeService {
 
   constructor(private http: HttpClient) { }
 
-  addCharge(charge: StripeCharge): Observable<any> {
-    return this.http.post(this.makeChargeEndpoint, charge, this.options);
+  addCharge(charge: StripeCharge): Promise<any> {
+    return this.http.post(this.makeChargeEndpoint, charge, this.options).toPromise();
+  }
+
+  chargeFailed(charge: StripeCharge): Promise<any> {
+    return this.http.post(this.chargeFailedEndpoint, charge, this.options).toPromise();
   }
 
   addCustomer(customer: StripeCustomer): Observable<any> {

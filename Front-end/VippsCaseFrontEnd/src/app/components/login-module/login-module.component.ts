@@ -1,11 +1,10 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { LoginService } from "../../services/login.service";
-import { Login } from "../../shared/models/login.model";
+import { Injectable } from '@angular/core';
+import { LoginService } from '../../services/login.service';
+import { Login } from '../../shared/models/login.model';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-//import * as moment from "moment";
+// import * as moment from "moment";
 
 
 @Component({
@@ -20,65 +19,64 @@ export class LoginModuleComponent implements OnInit {
   @Output() errorMessage: string;
 
   login = {} as Login;
-  loginError = false; 
+  loginError = false;
 
-  //cookie vars
-  event: boolean; 
+  // cookie vars
+  event: boolean;
   username: any;
   password: any;
   cookieValueUsername: any;
   cookieValuePassword: any;
 
   constructor(private cookie: CookieService,
-    private http: HttpClient,
-    private loginService: LoginService,
-    private router: Router) { }
+              private loginService: LoginService,
+              private router: Router) { }
 
   ngOnInit() {
     // this.username = document.getElementById('username');
     // this.password = document.getElementById('password');
-    
+
     this.username = this.cookie.get('username');
     this.password = this.cookie.get('password');
   }
 
-  onRememberMe(event) {
+  onRememberMe(event: any) {
     this.event = event.target.checked;
   }
 
-  loginClicked(email, pwd, role){
-    console.log("Login method called...");
+  loginClicked(email: string, pwd: string, role: any) {
+    console.log('Login method called...');
     this.cookieValueUsername = this.cookie.get('username');
     this.cookieValuePassword = this.cookie.get('password');
-    
-    if(this.event) {
-      //set cookies
-      this.cookie.set("username", email, 1);
-      this.cookie.set("password", pwd, 1);
+
+    if (this.event) {
+      // set cookies
+      this.cookie.set('username', email, 1);
+      this.cookie.set('password', pwd, 1);
     }
 
     this.login = {
-      email: email,
+      email,
       password: pwd,
-      role: role
-    }
-    
+      role
+    };
+
     this.loginService.login(this.login).subscribe(
       data => {
-        //Navigate to purchase
+        // Navigate to purchase
         this.router.navigate(['/purchase']);
-        //Set sessiontoken
-        this.setSession(data.token, );
-        //disable login error message
+        // Set sessiontoken
+        this.setSession(data.token);
+        // disable login error message
         this.loginError = false;
 
-        console.log(localStorage.getItem("id_token"));
+        console.log(localStorage.getItem('id_token'));
       },
       error => {
         console.log(error);
         this.loginError = true;
-        this.errorMessage = error.statusText + ": Invalid username or password!";
-        
+        this.errorMessage = error.statusText + ': Invalid username or password!';
+
       }
     );
 
@@ -87,12 +85,12 @@ export class LoginModuleComponent implements OnInit {
   }
 
   private setSession(token) {
-    //const expiresAt = moment().add(authResult.expiresIn,'second');
+    // const expiresAt = moment().add(authResult.expiresIn,'second');
 
     localStorage.setItem('id_token', token);
-    const payload = atob(token.split('.')[1])
-    const userId = JSON.parse(payload)['UserId'];
-    localStorage.setItem('user_id', userId)
-    //localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
-}  
+    const payload = atob(token.split('.')[1]);
+    const userId = JSON.parse(payload).UserId;
+    localStorage.setItem('user_id', userId);
+    // localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
+  }
 }

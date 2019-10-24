@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-item-list',
@@ -12,11 +11,11 @@ export class ItemListComponent implements OnInit {
   @Input() displayType = '';
   @Input() items: any;
 
-  constructor(private cartService: CartService) {
+  constructor() {
   }
 
   ngOnInit() {
-    if(!this.items){
+    if (!this.items) {
       this.items = [];
     }
   }

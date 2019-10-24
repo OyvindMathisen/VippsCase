@@ -2,10 +2,13 @@
     <p>No order history yet</p>
 </div>
 
-<div *ngFor="let order of orders">
+<div *ngFor="let order of orders; index as i">
     <!-- TODO: Make seperator between each order look better
     It's a bit ugly right now -->
     <hr id="tableLine">
-    <h5>{{ order.order.createdAt | date:'medium' }}</h5>
-    <app-item-list [items]="order.items"></app-item-list>
+    <button type="button" class="collapsible" (click)="onShowOrderClicked(i)">{{ order.order.createdAt | date:'medium' }}</button>
+    <!-- TODO: The collapse only happens for the first child since all of them are called content-->
+    <div [ngClass]="{ 'show': order.visible }" class="orders">
+        <app-item-list [items]="order.items"></app-item-list>
+    </div>
 </div>

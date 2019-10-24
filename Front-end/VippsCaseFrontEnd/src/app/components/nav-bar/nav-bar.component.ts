@@ -12,7 +12,7 @@ export class NavBarComponent implements OnInit {
   ngOnInit() {
   }
 
-  clearStorage(){
+  clearStorage() {
     localStorage.clear();
   }
 

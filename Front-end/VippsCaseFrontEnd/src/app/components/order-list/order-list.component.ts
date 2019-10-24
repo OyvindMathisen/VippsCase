@@ -15,12 +15,25 @@ export class OrderListComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(!this.orders){
+    if (!this.orders) {
       this.orders = [];
     }
-    this.cartService.getOrdersByUserId(28).subscribe((data) => {
-      // Orders are sorted by newest first by themselves
-      this.orders = data;
-    })
+    this.cartService.getOrdersByUserId(parseInt(localStorage.getItem('user_id'), 10)).subscribe((data) => {
+      this.orders = data.map((order: any) => {
+        order.visible = false;
+        return order;
+      });
+    });
+  }
+
+  onShowOrderClicked(id: number) {
+    this.orders.forEach((order: any, index: number) => {
+      order.visible = index === id;
+    });
+
+    /*
+    // Allows multiple orders to be open at once, and only close when clicked again.
+    this.orders[id].visible = !this.orders[id].visible;
+    */
   }
 }

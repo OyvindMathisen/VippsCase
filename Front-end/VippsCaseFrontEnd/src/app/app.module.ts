@@ -11,12 +11,10 @@ import { PurchaseHistoryComponent } from './views/purchase-history/purchase-hist
 import { PurchaseConfirmedComponent } from './views/purchase-confirmed/purchase-confirmed.component';
 import { ItemListComponent } from './components/item-list/item-list.component';
 import { ItemComponent } from './components/item/item.component';
-import { BillComponent } from './components/bill/bill.component';
 import { LoginModuleComponent } from './components/login-module/login-module.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
-import { StripeCardInputComponent } from './components/stripe-card-input/stripe-card-input.component';
 import { ErrorComponent } from './components/error/error.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { PersonInformationComponent } from './components/person-information/person-information.component';
@@ -38,10 +36,8 @@ import { RoleGuardService } from './services/role-guard.service';
     PurchaseConfirmedComponent,
     ItemListComponent,
     ItemComponent,
-    BillComponent,
     NavBarComponent,
     FooterComponent,
-    StripeCardInputComponent,
     ProfileDetailsComponent,
     ErrorComponent,
     PageNotFoundComponent,
