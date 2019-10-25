@@ -105,7 +105,7 @@ namespace VippsCaseAPI.Controllers
 
         private string generateAnonymousToken()
         {
-            var key = Encoding.UTF8.GetBytes("super_secret_key_6060JK");
+            var key = Encoding.UTF8.GetBytes("Removed");
 
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
 
@@ -128,7 +128,7 @@ namespace VippsCaseAPI.Controllers
 
         private string generateToken(User user)
         {
-            var key = Encoding.UTF8.GetBytes("super_secret_key_6060JK");
+            var key = Encoding.UTF8.GetBytes("Removed");
 
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
 
