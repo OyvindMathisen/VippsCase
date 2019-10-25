@@ -41,7 +41,7 @@ namespace VippsCaseAPI
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = "admin",
                         ValidAudience = "user",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super_secret_key_6060JK"))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Redacted"))
                     };
                 });
             services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration["ConnectionString:VippsCaseDev"]));
